@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.dto.UserDto;
@@ -15,6 +16,8 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @Repository
 @RequiredArgsConstructor
 public class UserDao {
+	
+	@Autowired
 	private final SqlSession session;
 
 	String namespace = "com.example.mapper.UserMapper";

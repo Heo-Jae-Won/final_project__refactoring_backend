@@ -72,19 +72,15 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="debug">
+	<logger name="com.example.mapper" level="debug"
+		additivity="false">
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="Error" />
 	</logger>
 
-	<logger name="jdbc.sqlonly" level="INFO">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	
-	<logger name="jdbc.resultsettable" level="INFO">
+	<logger name="org.springframework" level="debug"
+		additivity="false">
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="Error" />

@@ -7,7 +7,7 @@
 		values(#{pcode},#{paycode},#{payprice},#{seller},#{buyer},#{paytype},#{payemail})
 	</insert>
 
-	<select id="list" resultType="com.example.domain.PayVO">
+	<select id="list" resultType="com.example.dto.PayDto">
 		select * from tbl_pay
 	</select>
 
@@ -20,7 +20,7 @@
 		update tbl_pay set buyercondition=1 where paycode=#{paycode}
 	</update>
 	
-	<select id="read" resultType="com.example.domain.PayVO">
+	<select id="read" resultType="com.example.dto.PayDto">
 		select * from tbl_pay where paycode=#{paycode}
 	</select>
 	

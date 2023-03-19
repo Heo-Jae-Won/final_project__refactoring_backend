@@ -2,6 +2,7 @@ package com.example.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 public class AdminLoginRestController {
 
+	@Autowired
 	private final LoginService loginService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)

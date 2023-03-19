@@ -17,7 +17,7 @@
 		pcode=#{pcode} and unickname=#{unickname}
 	</update>
 	
-	<select id="likeCount" resultType="com.example.domain.PboardLikeVO">
+	<select id="likeCount" resultType="com.example.dto.ProductBoardLikeDto">
 		select lovecondition from tbl_like_pboard
 		where pcode=#{pcode} and
 		unickname=#{unickname}

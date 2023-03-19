@@ -3,6 +3,8 @@ package com.example.controller;
 import java.util.UUID;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +20,14 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/review")
+@CrossOrigin(origins ="http://localhost:3000")
 public class ReviewRestController {
 
+	@Autowired
 	private final ReviewService reviewService;
+	@Autowired
 	private final PayService payService;
+	@Autowired
 	private final ProductBoardService productBoardService;
 
 	@RequestMapping("")

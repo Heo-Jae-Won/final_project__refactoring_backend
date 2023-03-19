@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.dto.NoticeDto;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class NoticeDao {
+	
+	@Autowired
 	private final SqlSession session;
 
 	String namespace = "com.example.mapper.NoticeMapper";

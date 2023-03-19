@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductBoardMapper">
 
-	<select id="list" resultType="com.example.domain.PboardVO">
+	<select id="list" resultType="com.example.dto.ProductBoardDto">
 		select
 		pcode, ptitle, pcontent,
 		pwriter, pimage, pprice, regDate
@@ -53,7 +53,7 @@
 	</select>
 
 
-	<select id="read" resultType="com.example.domain.PboardVO">
+	<select id="read" resultType="com.example.dto.ProductBoardDto">
 	select
 		pcode, ptitle, pcontent,
 		pwriter, pimage, pprice, regDate, viewcnt, plike, pname,ROUND(upoint,2) upoint,pcondition,uid
@@ -106,7 +106,7 @@
 		pcode=#{pcode}
 	</update>
 
-	<select id="best" resultType="com.example.domain.PboardVO">
+	<select id="best" resultType="com.example.dto.ProductBoardDto">
 		select * from tbl_pboard
 		order by plike desc 
 		limit 0,16;

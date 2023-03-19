@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +14,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins ="http://localhost:3000")
 public class TradeInfoRestController {
 
+	@Autowired
 	private final TransactionService transactionService;
 
 	@RequestMapping("/api/tradeinfo/buylist/{buyer}")

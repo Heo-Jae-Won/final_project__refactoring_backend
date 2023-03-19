@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.mapper.TradeInfoMapper">
-	<select id="buyList" resultType="com.example.domain.PayVO">
+<mapper namespace="com.example.mapper.TransactionMapper">
+	<select id="buyList" resultType="com.example.dto.PayDto">
 		select payprice, buyer,seller,paycode,pcode,buyercondition, regDate from
 		tbl_pay where buyer=#{buyer}
 		order by regDate
 		limit #{start}, 6
 	</select>
-	<select id="sellList" resultType="com.example.domain.PayVO">
+	<select id="sellList" resultType="com.example.dto.PayDto">
 		select payprice, buyer,seller,paycode,pcode, regDate,sellercondition from
 		tbl_pay where seller=#{seller}
 		order by regDate
@@ -22,7 +22,7 @@
 		select count(*) from tbl_pay where buyer=#{seller}
 	</select>
 
-	<select id="sellchart" resultType="Hashmap">
+	<select id="sellchart" resultType="com.example.dto.PayDto">
 		select
 		month(aa.tmonth) month,
 		 ifnull(sum(p.payprice),0) payprice
@@ -36,7 +36,7 @@
             	tmonth;
 	</select>
 	
-	<select id="buychart" resultType="Hashmap">
+	<select id="buychart" resultType="com.example.dto.PayDto">
 		select
 		month(aa.tmonth) month,
 		 ifnull(sum(p.payprice),0) payprice

@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +16,12 @@ import com.example.service.EventReplyService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@CrossOrigin(origins ="http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/api/ereply")
 public class EventReplyRestController {
 
+	@Autowired
 	private final EventReplyService eventReplyService;
 
 	@RequestMapping("/list")

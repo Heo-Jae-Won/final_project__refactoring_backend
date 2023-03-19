@@ -9,17 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.dao.AdminDao;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 	
 	@Autowired
-	AdminDao adao;
+	private final AdminDao adminDao;
 	
 	
 	@RequestMapping("/")
 	public String tiles( Model model,HttpSession session) {
-		model.addAttribute("login_info",adao.read((String) session.getAttribute("aid")));
+		model.addAttribute("login_info",adminDao.read((String) session.getAttribute("aid")));
 		return "home.tiles";
 	}
 	
