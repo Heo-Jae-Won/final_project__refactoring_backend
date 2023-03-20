@@ -1,3 +1,6 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=75903ba990d2b196efbfc8506af69abad5a8e049
 eclipse.preferences.version=1
-encoding//src/main/java/com/example/controller/PboardRESTController.java=UTF-8
+encoding//src/main/java/com/example/controller/ProductBoardController.java=UTF-8
 encoding//src/main/java/com/example/controller/UserRestController.java=UTF-8

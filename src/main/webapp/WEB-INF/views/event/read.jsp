@@ -18,12 +18,17 @@ body {
 table {
 	margin-top: 15px;
 	margin-left: 420px;
+<<<<<<< HEAD
 	width:600px;
+=======
+	width: 600px;
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 }
 
 #list {
 	margin-top: 15px;
 	margin-left: 500px;
+<<<<<<< HEAD
 	width:800px;
 }
 
@@ -41,12 +46,31 @@ margin-top:50px;
 
 #button1{
 margin-top:30px;
+=======
+	width: 800px;
+}
+
+.buttons {
+	margin-top: 15px;
+	margin-left: 700px;
+	width: 800px;
+}
+
+#replylist {
+	text-align: center;
+	margin-top: 50px;
+}
+
+#button1 {
+	margin-top: 30px;
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 }
 </style>
 <body>
 	<h2 style="text-align: center">이벤트</h2>
 	<form style="text-align: center" name="frm">
 		<div>
+<<<<<<< HEAD
 			제목 ㅡ <input name="etitle" value="${vo.etitle}" id="etitle" size=80
 				placeholder="제목을 입력해주세요.">
 		</div>
@@ -58,6 +82,18 @@ margin-top:30px;
 		<div id="button1">
 			<button type="submit">수정</button>
 			<button style='margin-left:70px' type="button" id="back">뒤로가기</button>
+=======
+			제목 ㅡ <input name="etitle" value="${eventDto.etitle}" id="etitle"
+				size=80 placeholder="제목을 입력해주세요.">
+		</div>
+		<div style="margin-top: 15px">
+			<textarea cols=100 rows=10 name="econtent" id="econtent">"${eventDto.econtent}"</textarea>
+		</div>
+		<input name="ecode" value="${eventDto.ecode}" type="hidden" />
+		<div id="button1">
+			<button type="submit">수정</button>
+			<button style='margin-left: 70px' type="button" id="back">뒤로가기</button>
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 		</div>
 	</form>
 
@@ -122,6 +158,7 @@ margin-top:30px;
 			}
 			//입력한 데이터를 전송
 			$.ajax({
+<<<<<<< HEAD
 			type:"patch",
 			url:"/api/event",
 			data:JSON.stringify(data),
@@ -129,6 +166,15 @@ margin-top:30px;
 			}).done(function(){
 			console.log("수정 성공");
 			location.href="/event/list?page=1&num=6&searchType=&keyword="
+=======
+				type:"patch",
+				url:"/api/event",
+				data:JSON.stringify(data),
+				contentType: "application/json; charset=utf-8"
+			}).done(function(){
+				console.log("수정 성공");
+				location.href="/event/list?page=1&num=6&searchType=&keyword="
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 		})
 
 	 });

@@ -26,16 +26,11 @@ margin-top:30px;
 
 	<form style="text-align: center" name="frm">
 		<div>
-			제목 ㅡ <input name="ntitle" value="${vo.ntitle}" id="ntitle" size=80
+			제목 ㅡ <input name="ntitle" value="${noticeDto.ntitle}" id="ntitle" size=80
 				placeholder="제목을 입력해주세요.">
 		</div>
-		
-		<div style="margin-top: 15px">
-			<textarea  cols=100 rows=10 name="ncontent" id="ncontent"
-				placeholder="내용을 입력해주세요.">"${vo.ncontent}"</textarea>
-		</div>
-		<input type="hidden" name=nwriter value="${vo.nwriter}" /> <input
-			type="hidden" name=ncode value="${vo.ncode}" />
+		<input type="hidden" name=nwriter value="${noticeDto.nwriter}" /> <input
+			type="hidden" name=ncode value="${noticeDto.ncode}" />
 		<div id="button1">
 			<button type="submit" id="btnSave">수정하기</button>
 			<button style='margin-left:70px' type="button" id="back">뒤로가기</button>

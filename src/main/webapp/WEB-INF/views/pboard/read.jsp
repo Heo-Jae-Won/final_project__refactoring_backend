@@ -15,8 +15,13 @@ body {
 </style>
 <body>	
 	<h1>상품 내용</h1>
+<<<<<<< HEAD
 	<h3>제목 ㅡ ${vo.ptitle}</h3>
 	<p>내용 ㅡ ${vo.pcontent}</p>
+=======
+	<h3>제목 ㅡ ${pboardDto.ptitle}</h3>
+	<p>내용 ㅡ ${pboardDto.pcontent}</p>
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 	<hr>
 	<button id="list">목록으로</button>
 </body>

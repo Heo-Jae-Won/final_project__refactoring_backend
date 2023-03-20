@@ -1,49 +1,36 @@
 package com.example.controller;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dao.AdminDAO;
-import com.example.dao.PboardDAO;
-import com.example.domain.AdminVO;
+import com.example.dto.AdminLoginDto;
+import com.example.service.LoginService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminLoginRestController {
 
-	@Autowired
-	AdminDAO adao;
-	
-	@Autowired
-	PboardDAO pdao;
+
+
+	private final LoginService loginService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public int loginPost(AdminVO loginVO, HttpSession session) {
+	public int loginPost(AdminLoginDto loginVO, HttpSession session) {
+		int loginStatus = loginService.login(loginVO, session);
 
-		int result = 0;
+		return loginStatus;
 
-		AdminVO ReadVO = adao.read(loginVO.getAid());
-
-		if (ReadVO == null) 
-			throw new Error("No data from DB");
-		
-
-		// Login success
-		if (ReadVO.getApass().equals(loginVO.getApass())) {
-			result = 1;
-			session.setAttribute("aid", loginVO.getAid());
-		}
-		return result;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public void logout(HttpSession session) {
-		session.removeAttribute("aid");
+		loginService.logout(session);
 	}
 
 }

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.AdminMapper">
 
-	 <select id="read" resultType="com.example.domain.AdminVO">
-	 	select * from tbl_admin where aid=#{aid}
+	 <select id="read" resultType="com.example.dto.AdminLoginDto">
+	 	select * from tbl_admin where aid=#{adminId}
  	 </select>
  	 
  	 <insert id="insert">

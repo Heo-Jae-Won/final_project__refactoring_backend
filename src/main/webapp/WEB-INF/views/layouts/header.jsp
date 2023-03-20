@@ -82,7 +82,11 @@ a:hover{
 				<li><a href='/event/list?page=1&num=6&searchType=&keyword='>이벤트</a></li>
 			</ul>
 			<ul>
+<<<<<<< HEAD
 				<li>${login_info.aid }</li>
+=======
+				<li>${login_info.adminId }</li>
+>>>>>>> 75903ba990d2b196efbfc8506af69abad5a8e049
 				<li><button>
 						<a class="btn-fill" onclick="go_logout()">로그아웃</a>
 					</button></li>
