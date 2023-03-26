@@ -35,6 +35,7 @@ public class ProductBoardLikeRestController {
 
 	@RequestMapping(value = "/api/pboard/user/dislike", method = RequestMethod.PATCH)
 	public void dislike(@RequestBody ProductBoardLikeDto pboardDislikeDto) {
+		
 		productBoardLikeService.dislike(pboardDislikeDto);
 	}
 

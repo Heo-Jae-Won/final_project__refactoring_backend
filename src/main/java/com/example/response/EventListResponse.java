@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 public class EventListResponse {
 	private List<EventDto> eventList;
-	private int eventListToal;
+	private int eventListTotal;
 }

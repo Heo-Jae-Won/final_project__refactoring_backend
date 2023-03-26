@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/review")
-@CrossOrigin(origins ="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReviewRestController {
 
 	private final ReviewService reviewService;
@@ -39,19 +39,20 @@ public class ReviewRestController {
 	public int insert(ReviewDto insertDto) {
 		int result = 0;
 
-		if (payService.read(insertDto.getPaycode()) == null)
+		if (payService.read(insertDto.getPaycode()) == null) {
 			return result;
+		}
 
 		UUID code = UUID.randomUUID();
 		insertDto.setRvcode(code.toString());
 
 		String pwriter = productBoardService.readPwriter(insertDto.getPcode());
 
-		if (insertDto.getSender().equals(pwriter))
+		if (insertDto.getSender().equals(pwriter)) {
 			reviewService.insertSellerReview(insertDto);
-
-		else if (!insertDto.getSender().equals(pwriter))
+		} else {
 			reviewService.insertBuyerReview(insertDto);
+		}
 
 		result = 1;
 

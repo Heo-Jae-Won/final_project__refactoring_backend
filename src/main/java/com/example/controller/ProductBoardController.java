@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dto.ProductBoardDto;
@@ -23,17 +20,16 @@ import com.example.response.ProductListResponse;
 import com.example.service.ProductBoardService;
 
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductBoardController {
 
 	@Autowired
 	private final ProductBoardService pboardService;
-	
-	@RequestMapping(value = "/pboard/list", method=RequestMethod.GET)
+
+	@RequestMapping(value = "/pboard/list", method = RequestMethod.GET)
 	public String list(Model model, int page, int num, String searchType, String keyword) throws Exception {
 		int last = (pboardService.getTotal(searchType, keyword) % 6) == 0
 				? (pboardService.getTotal(searchType, keyword) / 6)
@@ -47,7 +43,7 @@ public class ProductBoardController {
 	}
 
 	@RequestMapping(value = "/pboard/read/{pcode}", method = RequestMethod.GET)
-	public String read(Model model, @PathVariable String pcode) {
+	public String read(Model model, @PathVariable String pcode) throws Exception {
 		model.addAttribute("pboardDto", pboardService.read(pcode));
 		return "pboard/read";
 	}
@@ -66,6 +62,7 @@ public class ProductBoardController {
 	@ResponseBody
 	@RequestMapping("/api/pboard/readpcondition/{pcode}")
 	public int readPcondition(@PathVariable String pcode) {
+
 		return pboardService.readPcondition(pcode);
 	};
 
@@ -74,82 +71,36 @@ public class ProductBoardController {
 	public void update(ProductBoardDto updateVO, MultipartHttpServletRequest multi) throws Exception {
 
 		// file path designate
-		if (multi.getFile("file") == null) {
-			pboardService.update(updateVO);
-			return;
-		}
 
-		String path = "/upload/project/";
-		MultipartFile file = multi.getFile("file");
-
-		String contentType = file.getContentType();
-		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Exception("imagefile only accepted for jpeg,png");
-		}
-
-		// file -> thumnail
-		File newFile = new File(path + file.getOriginalFilename());
-		if (!newFile.exists()) {
-			FileOutputStream thumnail = new FileOutputStream(newFile);
-			Thumbnailator.createThumbnail(file.getInputStream(), thumnail, 300, 300);
-			thumnail.close();
-		}
-
-		// update DB
-		updateVO.setPimage("/upload/project/" + file.getOriginalFilename());
-		pboardService.update(updateVO);
+		pboardService.update(updateVO, multi);
 	};
 
 	@ResponseBody
 	@RequestMapping("/api/pboard/{pcode}")
-	public ProductBoardDto readviewcnt(@PathVariable String pcode) {
-
-		if (pboardService.read(pcode) == null) {
-			throw new Error("불법침입자");
-		}
+	public ProductBoardDto readviewcnt(@PathVariable String pcode) throws Exception {
 
 		return pboardService.read(pcode);
 	};
 
 	@ResponseBody
 	@RequestMapping("/api/pboard/data/{pcode}")
-	public ProductBoardDto read(@PathVariable String pcode) {
-		if (pboardService.read(pcode) == null) {
-			return null;
-		}
-
-		return pboardService.read(pcode);
+	public ProductBoardDto read(@PathVariable String pcode) throws Exception {
+		
+		return pboardService.getProductInfo(pcode);
 	};
 
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public void insert(@Valid ProductBoardDto insertVO, MultipartHttpServletRequest multi) throws Exception {
-		if (multi.getFile("file") == null) {
-			throw new Error("no Image file");
-		}
 
-		String path = "c:/upload/project/";
-		MultipartFile file = multi.getFile("file");
-
-		String contentType = file.getContentType();
-		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Error("imagefile only accepted for jpeg,png");
-		}
-
-		File newFile = new File(path + file.getOriginalFilename());
-
-		if (!newFile.exists()) {
-			file.transferTo(newFile);
-		}
-		insertVO.setPimage("/upload/project/" + file.getOriginalFilename());
-
-		pboardService.insert(insertVO);
+		pboardService.insert(insertVO, multi);
 	};
 
 	@ResponseBody
 	@RequestMapping("/api/pboard/best")
-	public List<ProductBoardDto> best() {
-		return pboardService.best();
+	public List<ProductBoardDto> getBestItems() {
+		
+		return pboardService.getBestItems();
 	}
 
 	@ResponseBody

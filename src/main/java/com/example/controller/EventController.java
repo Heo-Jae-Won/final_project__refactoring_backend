@@ -62,7 +62,7 @@ public class EventController {
 	public EventListResponse list(int page, int num, String searchType, String keyword) throws Exception {
 		EventListResponse eventReplyListResponse = new EventListResponse();
 		eventReplyListResponse.setEventList(eventService.getList(page, num, searchType, keyword));
-		eventReplyListResponse.setEventListToal(eventService.getTotal(searchType, keyword));
+		eventReplyListResponse.setEventListTotal(eventService.getTotal(searchType, keyword));
 
 		return eventReplyListResponse;
 	};
