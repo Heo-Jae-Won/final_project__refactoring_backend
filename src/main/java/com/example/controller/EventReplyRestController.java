@@ -36,21 +36,25 @@ public class EventReplyRestController {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public void insert(@RequestBody EventReplyDto eventReplyDto) {
+		
 		eventReplyService.insert(eventReplyDto);
 	}
 
 	@RequestMapping(value = "/{eventReplyCode}", method = RequestMethod.PATCH)
 	public void delete(@PathVariable int eventReplyCode) {
+		
 		eventReplyService.userDelete(eventReplyCode);
 	}
 
 	@RequestMapping(value = "/admin/{eventReplyCode}", method = RequestMethod.PATCH)
 	public void adminDelete(@PathVariable int eventReplyCode) {
+		
 		eventReplyService.adminDelete(eventReplyCode);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PATCH)
 	public void update(@RequestBody EventReplyDto EventReplyDto) {
+		
 		eventReplyService.update(EventReplyDto);
 	}
 

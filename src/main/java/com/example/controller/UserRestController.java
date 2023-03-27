@@ -25,6 +25,7 @@ public class UserRestController {
 
 	@RequestMapping("/{uid}")
 	public UserDto read(@PathVariable String uid) {
+		
 		return userService.read(uid);
 	}
 
@@ -69,6 +70,7 @@ public class UserRestController {
 
 	@RequestMapping(value = "/condition", method = RequestMethod.PUT)
 	public void deactivate(@RequestBody String uid) {
+		
 		userService.deactivate(uid);
 	}
 

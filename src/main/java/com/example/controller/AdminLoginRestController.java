@@ -30,6 +30,7 @@ public class AdminLoginRestController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public void logout(HttpSession session) {
+		
 		loginService.logout(session);
 	}
 
