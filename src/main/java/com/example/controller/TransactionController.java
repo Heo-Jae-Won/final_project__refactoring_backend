@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins ="http://localhost:3000")
-public class TradeInfoRestController {
+public class TransactionController {
 
 	@Autowired
 	private final TransactionService transactionService;

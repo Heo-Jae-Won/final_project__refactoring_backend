@@ -5,8 +5,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.AdminDao;
-import com.example.dto.AdminLoginDto;
+import com.example.dao.UserDao;
+import com.example.dto.UserDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,27 +14,13 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class LoginService {
-	private final AdminDao adminaDao;
+	private final UserDao userDao;
 	
-	public int login(AdminLoginDto adminLoginDto, HttpSession session) {
-		int result = 0;
-
-		AdminLoginDto ReadVO = adminaDao.read(adminLoginDto.getAid());
-
-		if (ReadVO == null) 
-			throw new Error("No data from DB");
-		
-
-		// Login success
-		if (ReadVO.getApass().equals(adminLoginDto.getApass())) {
-			result = 1;
-			session.setAttribute("adminId", adminLoginDto.getAid());
-		}
-		return result;
+	public int login(UserDto userDto) {
+		return 0;
 	}
 	
 	public void logout(HttpSession session) {
-		session.removeAttribute("adminId");
 	}
 
 }

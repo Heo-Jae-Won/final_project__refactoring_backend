@@ -1,51 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EventReplyMapper">
+
+	<resultMap id="eventReplyInfo" type="eventReply">
+		<result column="event_reply_code" property="eventReplyCode"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="event_code" property="eventCode"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="event_reply_regDate"
+			property="eventReplyRegDate" jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="event_reply_content"
+			property="eventReplyContent" jdbcType="VARCHAR" javaType="String" />
+		<result column="event_reply_writer" property="eventReplyWriter"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+
+
+
 	<select id="list" resultType="com.example.dto.EventReplyDto">
-		select erwriter, ercode,
-		ercontent,regDate from tbl_ereply where ecode=#{ecode}
-		limit #{start},
-		#{num}
+		select event_reply_writer,
+		event_reply_code,
+		event_reply_content,event_reply_regDate from
+		event_reply where event_code=#{eventCode}
+		limit #{start}, #{num}
 	</select>
 
 	<select id="getTotal" resultType="int">
-		select count(*) from tbl_ereply
-		where ecode=#{ecode}
+		select count(*) from
+		event_reply
+		where event_code=#{eventCode}
 	</select>
 
 	<update id="update">
-		update tbl_ereply set
-		ercontent=#{ercontent} where ercode=#{ercode}
+		update event_reply set
+		event_reply_content=#{eventReplyContent} where
+		event_reply_code=#{eventReplyCode}
 	</update>
-	
+
 	<update id="updateUserCondition">
-		update tbl_ereply set usercondition=1 where
-		ercode=#{ercode}
+		update event_reply set event_reply_user_deleted=1
+		where
+		event_reply_code=#{eventReplyCode}
 	</update>
-	
+
 	<update id="updateAdminCondition">
-		update tbl_ereply set admincondition=1 where
-		ercode=#{ercode}
+		update event_reply set event_reply_admin_deleted=1
+		where
+		event_reply_code=#{eventReplyCode}
 	</update>
-	
+
 
 	<insert id="insert">
-		insert into tbl_ereply(ecode,ercontent,erwriter)
-		values(#{ecode},#{ercontent},#{erwriter})
+		insert into
+		event_reply(event_code,event_reply_content,event_reply_writer)
+		values(#{eventCode},#{eventReplyContent},#{eventReplyWriter})
 	</insert>
 
 	<update id="delete">
-		update tbl_ereply set ercontent='삭제된 댓글입니다.' where
-		ercode=#{ercode}
+		update event_reply set event_reply_content='삭제된
+		댓글입니다.' where
+		event_reply_code=#{eventReplyCode}
 	</update>
 
 	<update id="adminDelete">
-		update tbl_ereply set ercontent='관리자에 의해 삭제된 댓글입니다.'
-		where ercode=#{ercode}
+		update event_reply set event_reply_content='관리자에 의해
+		삭제된 댓글입니다.'
+		where event_reply_code=#{eventReplyCode}
 	</update>
 
 	<delete id="allDelete">
-		delete from tbl_ereply where ecode=#{ecode}
+		delete from event_reply where event_code=#{eventCode}
 	</delete>
 
 </mapper>

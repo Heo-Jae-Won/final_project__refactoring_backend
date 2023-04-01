@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias alias="user" type="com.example.dto.UserDto" />
+		<typeAlias alias="productBoard" type="com.example.dto.ProductBoardDto" />
+		<typeAlias alias="event" type="com.example.dto.EventDto" />
+		<typeAlias alias="eventReply" type="com.example.dto.eventReplyDto" />
+		<typeAlias alias="notice" type="com.example.dto.NoticeDto" />
+		<typeAlias alias="pay" type="com.example.dto.PayDto" />
+		<typeAlias alias="productBoardLike" type="com.example.dto.ProductBoardLIkeDto" />
+		<typeAlias alias="review" type="com.example.dto.ReviewDto" />
+		<typeAlias alias="transaction" type="com.example.dto.TransactionDto" />
+	</typeAliases>
+</configuration>

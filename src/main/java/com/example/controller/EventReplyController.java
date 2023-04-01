@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins ="http://localhost:3000")
 @RequiredArgsConstructor
 @RequestMapping("/api/ereply")
-public class EventReplyRestController {
+public class EventReplyController {
 
 	@Autowired
 	private final EventReplyService eventReplyService;

@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EventMapper">
+
+    <resultMap id="eventInfo" type="event">
+		<result column="event_code" property="eventCode" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="event_regDate" property="eventRegDate" 
+			jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="event_title" property="eventTitle"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="event_content" property="eventContent"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="event_writer" property="eventWriter"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+	
 	 <select id="list"
-		resultType="com.example.dto.EventDto">
+		resultMap="event">
 		select
-		ecode, etitle, econtent,
-		ewriter,regDate
-		from tbl_event
+		event_code, event_title, event_content,
+		event_writer,event_regDate
+		from event
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE etitle LIKE concat('%', #{keyword}, '%')
+			WHERE event_title LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE econtent LIKE concat('%', #{keyword}, '%')
+			WHERE event_content LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
-			WHERE etitle LIKE concat('%', #{keyword}, '%')
-			or econtent
+			WHERE event_title LIKE concat('%', #{keyword}, '%')
+			or event_content
 			LIKE concat('%', #{keyword}, '%')
 		</if>
 		
@@ -25,34 +40,34 @@
 	<select id="getTotal" resultType="int">
 		select count(*) from tbl_event
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE etitle LIKE concat('%', #{keyword}, '%')
+			WHERE event_title LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE econtent LIKE concat('%', #{keyword}, '%')
+			WHERE event_content LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
-			WHERE etitle LIKE concat('%', #{keyword}, '%')
-			or econtent
+			WHERE event_title LIKE concat('%', #{keyword}, '%')
+			or event_content
 			LIKE concat('%', #{keyword}, '%')
 		</if>
 	</select>
  	 
  	  <select id="read" resultType="com.example.dto.EventDto">
-	 	select * from tbl_event where ecode=#{ecode};
+	 	select * from event where event_code=#{eventCode};
  	 </select>
  	 
  	 <delete id="delete">
- 	 	delete from tbl_event where ecode=#{ecode}
+ 	 	delete from event where event_code=#{eventCode}
  	 </delete>
  	 
  	 <insert id="insert">
- 	 	insert into tbl_event(ecode,etitle,econtent,ewriter)
- 	 	values(#{ecode},#{etitle},#{econtent},#{ewriter})
+ 	 	insert into event(event_code,event_title,event_content,event_writer)
+ 	 	values(#{eventCode},#{eventTitle},#{eventContent},#{eventWriter})
  	 </insert>
  	 
  	 <update id="update">
- 	 	update tbl_event set etitle=#{etitle} , econtent=#{econtent}
- 	 	where ecode=#{ecode}
+ 	 	update event set event_title=#{eventTitle}, event_content=#{eventContent}
+ 	 	where event_code=#{eventCode}
  	 </update>
  	 
 </mapper>
