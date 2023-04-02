@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductBoardLikeMapper">
 
+
+ <resultMap id="productBoardLikeInfo" type="productBoardLike">
+		<result column="product_code" property="productCode" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="like_code" property="eventRegDate" 
+			jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="like_status" property="eventTitle"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="event_content" property="eventContent"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="event_writer" property="eventWriter"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+	
 	<update id="like">
 		insert into
 		tbl_like_pboard(pcode,unickname,lovecondition,lcode)

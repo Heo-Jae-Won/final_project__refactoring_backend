@@ -8,17 +8,17 @@ import lombok.Data;
 
 @Data
 public class PayDto {
-	private int payprice;
-	private int sellercondition;
-	private int buyercondition;
-	private String paytype;
-	private String payemail;
-	private String paycode;
-	private String buyer;
-	private String seller;
-	private String pcode;
+	private int payPrice;
+	private int paySellerReview;
+	private int payBuyerReview;
+	private String payType;
+	private String payEmail;
+	private String payCode;
+	private String payBuyer;
+	private String paySeller;
+	private String productCode;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
+	private Date payRegDate;
 
 }

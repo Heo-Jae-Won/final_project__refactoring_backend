@@ -17,7 +17,7 @@
 
 
 
-	<select id="list" resultType="com.example.dto.EventReplyDto">
+	<select id="list" resultMap="eventReplyInfo">
 		select event_reply_writer,
 		event_reply_code,
 		event_reply_content,event_reply_regDate from

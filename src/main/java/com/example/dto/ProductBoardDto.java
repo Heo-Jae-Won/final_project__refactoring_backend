@@ -9,28 +9,26 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class ProductBoardDto {
-	private String pcode;
+public class ProductBoardDto extends UserDto {
+	private String productCode;
 	@NotBlank
-	private String pcontent;
+	private String productContent;
 	@NotBlank
-	private String ptitle;
+	private String productTitle;
 	@NotBlank
-	private String pwriter;
+	private String productWriter;
 	@NotBlank
-	private String pname;
-	private String pimage;
-	private double upoint;
-	private String uid;
-	private int pprice;
-	private int pcondition;
-	private int viewcnt;
-	private int plike;
-	private int replycnt;
+	private String productName;
+	private String productImage;
+	private int productPrice;
+	private int productStatus;
+	private int productViewcnt;
+	private int productLikecnt;
+	private int productReplycnt;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
+	private Date productRegDate;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date updateDate;
+	private Date productUpdateDate;
 	
 
 	

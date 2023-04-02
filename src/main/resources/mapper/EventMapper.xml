@@ -17,7 +17,7 @@
 	
 	
 	 <select id="list"
-		resultMap="event">
+		resultMap="eventInfo">
 		select
 		event_code, event_title, event_content,
 		event_writer,event_regDate
@@ -52,7 +52,7 @@
 		</if>
 	</select>
  	 
- 	  <select id="read" resultType="com.example.dto.EventDto">
+ 	  <select id="read" resultMap="eventInfo">
 	 	select * from event where event_code=#{eventCode};
  	 </select>
  	 

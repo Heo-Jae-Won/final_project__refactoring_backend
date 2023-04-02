@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 public class EventReplyDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
-	private int ercode;
-	private int ecode;
-	private String ercontent;
-	private String erwriter;
-	private int admincondition;
-	private int usercondition;
+	private Date eventReplyRegDate;
+	private int eventReplyCode;
+	private int eventCode;
+	private String eventReplyContent;
+	private String eventReplyWriter;
+	private int adminDeleted;
+	private int userDeleted;
 	
 }

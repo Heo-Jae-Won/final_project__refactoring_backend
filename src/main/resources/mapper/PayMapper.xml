@@ -2,28 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.PayMapper">
 
+
+
+	<resultMap id="payInfo" type="pay">
+		<result column="product_code" property="productCode"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_code" property="payCode" jdbcType="INTEGER"
+			javaType="int" />
+		<result column="pay_price" property="payPrice"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_seller" property="paySeller"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="payBuyer" property="payBuyer"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_type" property="payType"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_email" property="payEmail"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+
+
 	<insert id="insert">
-		insert into tbl_pay(pcode,paycode,payprice,seller,buyer,paytype,payemail)
-		values(#{pcode},#{paycode},#{payprice},#{seller},#{buyer},#{paytype},#{payemail})
+		insert into
+		pay(product_code,pay_code,pay_price,pay_seller,pay_buyer,pay_type,pay_email)
+		values(#{productCode},#{payCode},#{payprice},#{paySeller},#{payBuyer},#{payType},#{payEmail})
 	</insert>
 
-	<select id="list" resultType="com.example.dto.PayDto">
-		select * from tbl_pay
+	<select id="list" resultMap="payInfo">
+		select * from pay
 	</select>
 
 
 	<update id="updateSellerCondition">
-		update tbl_pay set sellercondition=1 where paycode=#{paycode}
+		update pay set pay_seller_review=1 where
+		pay_code=#{payCode}
 	</update>
-	
+
 	<update id="updateBuyerCondition">
-		update tbl_pay set buyercondition=1 where paycode=#{paycode}
+		update pay set pay_buyer_review=1 where
+		pay_code=#{payCode}
 	</update>
-	
-	<select id="read" resultType="com.example.dto.PayDto">
-		select * from tbl_pay where paycode=#{paycode}
+
+	<select id="read" resultMap="payInfo">
+		select * from pay where
+		pay_code=#{payCode}
 	</select>
-	
-	
+
+
 
 </mapper>

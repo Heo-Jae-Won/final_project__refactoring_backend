@@ -13,11 +13,11 @@ import lombok.Data;
 public class EventDto {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
-	private int ecode;
-	private String etitle;
-	private String econtent;
-	private String ewriter;
+	private Date eventRegDate;
+	private int eventCode;
+	private String eventTitle;
+	private String eventContent;
+	private String eventWriter;
 	
 	
 	

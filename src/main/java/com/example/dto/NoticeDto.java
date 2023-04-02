@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 public class NoticeDto {
 
-	private String ncode;
-	private String ntitle;
-	private String ncontent;
-	private String nwriter;
+	private String noticeCode;
+	private String noticeTitle;
+	private String noticeContent;
+	private String noticeWriter;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
+	private Date noticeRegDate;
 	
 	
 

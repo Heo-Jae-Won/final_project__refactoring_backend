@@ -2,57 +2,76 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.NoticeMapper">
 
-	<select id="list" resultType="com.example.dto.NoticeDto">
-		select * from tbl_notice
+
+	<resultMap id="noticeInfo" type="notice">
+		<result column="notice_code" property="noticeCode"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="notice_regDate" property="noticeRegDate"
+			jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="notice_content" property="noticeContent"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="notice_writer" property="noticeWriter"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="notice_title" property="noticeTitle"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+
+
+	<select id="list" resultMap="noticeInfo">
+		select * from notice
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ntitle LIKE concat('%', #{keyword}, '%')
+			WHERE notice_title LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE ncontent LIKE concat('%', #{keyword}, '%')
+			WHERE notice_content LIKE concat('%', #{keyword}, '%')
 		</if>
-		<if test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
-			WHERE ntitle LIKE concat('%', #{keyword}, '%')
-			or ncontent
-			LIKE concat('%', #{keyword}, '%')
+		<if
+			test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
+			WHERE notice_title LIKE concat('%', #{keyword}, '%')
+			or notice_content
+			LIKE
+			concat('%', #{keyword}, '%')
 		</if>
 		limit #{start}, #{num}
 	</select>
 
 	<insert id="insert">
-		insert into tbl_notice(ntitle, ncontent, nwriter)
-		values(#{ntitle}, #{ncontent}, #{nwriter})
+		insert into notice(notice_title, notice_content, notice_writer)
+		values(#{noticeTitle}, #{noticeContent}, #{noticeWriter})
 	</insert>
 
-	<select id="read" resultType="com.example.dto.NoticeDto">
-		select * from tbl_notice
+	<select id="read" resultMap="noticeInfo">
+		select * from notice
 		where
-		ncode=#{ncode}
+		notice_code=#{noticeCode}
 	</select>
 
 	<update id="update">
-		update tbl_notice set ntitle=#{ntitle},
-		ncontent=#{ncontent},
-		nwriter=#{nwriter}
-		where ncode=#{ncode}
+		update notice set notice_title=#{noticeTitle},
+		notice_content=#{noticeContent},
+		notice_writer=#{noticeWriter}
+		where notice_code=#{noticeCode}
 	</update>
 
 	<select id="getTotal" resultType="int">
-		select count(*) from tbl_notice
+		select count(*) from notice
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ntitle LIKE concat('%', #{keyword}, '%')
+			WHERE notice_title LIKE concat('%', #{keyword}, '%')
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE ncontent LIKE concat('%', #{keyword}, '%')
+			WHERE notice_content LIKE concat('%', #{keyword}, '%')
 		</if>
-		<if test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
-			WHERE ntitle LIKE concat('%', #{keyword}, '%')
-			or ncontent
-			LIKE concat('%', #{keyword}, '%')
+		<if
+			test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
+			WHERE notice_title LIKE concat('%', #{keyword}, '%')
+			or notice_content
+			LIKE
+			concat('%', #{keyword}, '%')
 		</if>
 	</select>
 
 	<delete id="delete">
-		delete from tbl_notice where ncode=#{ncode}
+		delete from notice where notice_code=#{noticeCode}
 	</delete>
-	
+
 </mapper>

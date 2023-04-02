@@ -14,6 +14,8 @@ public class UserDto {
 	private String uprofile;
 	private String ubirth;
 	private String ucondition;
+	private double upoint;
+	private String urole;
 	
 	
 }

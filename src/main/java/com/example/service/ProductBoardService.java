@@ -59,7 +59,7 @@ public class ProductBoardService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		insertDto.setPimage("/upload/project/" + file.getOriginalFilename());
+		insertDto.setProductImage("/upload/project/" + file.getOriginalFilename());
 		productBoardDao.insert(insertDto);
 	};
 
@@ -88,7 +88,7 @@ public class ProductBoardService {
 		}
 
 		// update DB
-		updateVO.setPimage("/upload/project/" + file.getOriginalFilename());
+		updateVO.setProductImage("/upload/project/" + file.getOriginalFilename());
 		productBoardDao.update(updateVO);
 	};
 

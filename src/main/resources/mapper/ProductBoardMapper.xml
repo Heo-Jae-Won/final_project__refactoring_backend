@@ -2,76 +2,113 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductBoardMapper">
 
-	<select id="list" resultType="com.example.dto.ProductBoardDto">
+	<resultMap id="productBoardInfo" type="productBoard">
+		<result column="product_code" property="productCode"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="product_title" property="productTitle"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="product_content" property="productContent"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="product_writer" property="productWriter"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="product_image" property="productImage"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="product_price" property="productPrice"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="product_regDate" property="productRegDate"
+			jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="product_updateDate"
+			property="productUpdateDate" jdbcType="VARCHAR" javaType="String" />
+		<result column="product_viewcnt" property="productViewcnt"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="product_likecnt" property="productLikecnt"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="product_name" property="productName"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+
+	<select id="list" resultMap="productBoardInfo">
 		select
 		pcode, ptitle, pcontent,
 		pwriter, pimage, pprice, regDate
 		updateDate, viewcnt, plike,pname
-		from tbl_pboard 
-		
+		from tbl_pboard
+
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE pcontent LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE pcontent LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
-		<if test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
+		<if
+			test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
 			WHERE ptitle LIKE concat('%', #{keyword}, '%') and pcondition=0
-			or 
+			or
 			pcontent LIKE concat('%', #{keyword}, '%') and pcondition=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("작성자")'>
-			WHERE pwriter LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE pwriter LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType == null or searchType.equals("")'>
 			WHERE pcondition=0
 		</if>
-		
+
 		limit #{start}, #{num}
 	</select>
 
 	<select id="getTotal" resultType="int">
 		select count(*) from tbl_pboard
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE pcontent LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE pcontent LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType != null and searchType.equals("제목과 내용")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 			or pcontent
-			LIKE concat('%', #{keyword}, '%') and pcondition=0
+			LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("작성자")'>
-			WHERE pwriter LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE pwriter LIKE concat('%', #{keyword}, '%') and
+			pcondition=0
 		</if>
 		<if test='searchType == null or searchType.equals("")'>
 			WHERE pcondition=0
 		</if>
-		
+
 	</select>
 
 
-	<select id="read" resultType="com.example.dto.ProductBoardDto">
-	select
+	<select id="read" resultMap="productBoardInfo">
+		select
 		pcode, ptitle, pcontent,
-		pwriter, pimage, pprice, regDate, viewcnt, plike, pname,ROUND(upoint,2) upoint,pcondition,uid
+		pwriter, pimage, pprice, regDate, viewcnt,
+		plike, pname,ROUND(upoint,2)
+		upoint,pcondition,uid
 		from tbl_pboard p
-        inner join tbl_user u
-		on u.unickname=p.pwriter
-        where pcode=#{pcode}
+		inner join tbl_user u
+		on
+		u.unickname=p.pwriter
+		where pcode=#{pcode}
 	</select>
-	
-		<select id="readPwriterId" resultType="string">
-	select
+
+	<select id="readPwriterId" resultType="string">
+		select
 		uid
 		from tbl_pboard p
-        inner join tbl_user u
+		inner join tbl_user u
 		on u.unickname=p.pwriter
-        where pcode=#{pcode}
+		where pcode=#{pcode}
 	</select>
-	
+
 
 	<insert id="insert">
 		insert into tbl_pboard
@@ -83,18 +120,21 @@
 	<delete id="delete">
 		delete from tbl_pboard where pcode=#{pcode}
 	</delete>
-	
+
 	<select id="readPwriter" resultType="string">
-	select pwriter from tbl_pboard where pcode=#{pcode}
+		select pwriter from
+		tbl_pboard where pcode=#{pcode}
 	</select>
-	
+
 	<select id="readPcondition" resultType="int">
-	select pcondition from tbl_pboard where pcode=#{pcode}
+		select pcondition from
+		tbl_pboard where pcode=#{pcode}
 	</select>
 
 	<update id="update">
 		update tbl_pboard set ptitle=#{ptitle},
-		pcontent=#{pcontent}, pimage=#{pimage}, pprice=#{pprice}, pname=#{pname}
+		pcontent=#{pcontent}, pimage=#{pimage}, pprice=#{pprice},
+		pname=#{pname}
 		where
 		pcode=#{pcode}
 	</update>
@@ -108,7 +148,8 @@
 
 	<select id="best" resultType="com.example.dto.ProductBoardDto">
 		select * from tbl_pboard
-		order by plike desc 
+		order by
+		plike desc
 		limit 0,16;
 	</select>
 
@@ -118,10 +159,11 @@
 		tbl_like_pboard l
 		where lovecondition=1 and p.pcode=l.pcode)
 	</update>
-	
+
 	<update id="updateSold">
-	update tbl_pboard set pcondition=1
-	where pcode=#{pcode}
+		update tbl_pboard set pcondition=1
+		where
+		pcode=#{pcode}
 	</update>
 
 

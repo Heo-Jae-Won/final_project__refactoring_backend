@@ -20,7 +20,7 @@ public class PayService {
 
 	public void insert(PayDto insertVO) {
 		payDao.insert(insertVO);
-		pboardDao.updateSold(insertVO.getPcode());
+		pboardDao.updateSold(insertVO.getProductCode());
 	}
 
 	public void updateSellerCondition(String paycode) {
