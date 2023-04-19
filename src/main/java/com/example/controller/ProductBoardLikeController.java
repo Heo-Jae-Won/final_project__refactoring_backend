@@ -26,9 +26,9 @@ public class ProductBoardLikeController {
 	@RequestMapping(value = "/api/pboard/user/like", method = RequestMethod.PATCH)
 	public void like(@RequestBody ProductBoardLikeDto pboardLikeDto) {
 
-		if (pboardLikeDto.getLcode() == null) {
+		if (pboardLikeDto.getLikeCode() == null) {
 			UUID code = UUID.randomUUID();
-			pboardLikeDto.setLcode(code.toString());
+			pboardLikeDto.setLikeCode(code.toString());
 		}
 		productBoardLikeService.like(pboardLikeDto);
 	}

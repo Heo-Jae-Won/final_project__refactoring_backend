@@ -55,16 +55,16 @@ public class UserService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		updateVO.setUprofile("/upload/project/" + file.getOriginalFilename());
+		updateVO.setUserProfile("/upload/project/" + file.getOriginalFilename());
 
-		Matcher matcherTel = patternTel.matcher(updateVO.getUtel());
+		Matcher matcherTel = patternTel.matcher(updateVO.getUserTel());
 		if (matcherTel.matches() == false) {
 			throw new Exception("does not satisfy tel pattern condition");
 		}
 
 		Pattern patternEmail = Pattern
 				.compile("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
-		Matcher matcherEmail = patternEmail.matcher(updateVO.getUemail());
+		Matcher matcherEmail = patternEmail.matcher(updateVO.getUserEmail());
 		if (matcherEmail.matches() == false) {
 			throw new Exception("does not satisfy condition");
 		}
@@ -88,24 +88,24 @@ public class UserService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		insertVO.setUprofile("/upload/project/" + file.getOriginalFilename());
+		insertVO.setUserProfile("/upload/project/" + file.getOriginalFilename());
 
 		Pattern patternPassword = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,10}$");
-		Matcher matcherPassword = patternPassword.matcher(insertVO.getUpass());
+		Matcher matcherPassword = patternPassword.matcher(insertVO.getUserPass());
 		if (matcherPassword.matches() == false) {
 			throw new Exception("does not satisfy password pattern");
 		}
 
-		insertVO.setUpass(passwordEncoder.encode(insertVO.getUpass()));
+		insertVO.setUserPass(passwordEncoder.encode(insertVO.getUserPass()));
 
-		Matcher matcherTel = patternTel.matcher(insertVO.getUtel());
+		Matcher matcherTel = patternTel.matcher(insertVO.getUserTel());
 		if (matcherTel.matches() == false) {
 			throw new Exception("does not satisfy tel pattern");
 		}
 
 		Pattern patternEmail = Pattern
 				.compile("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
-		Matcher matcherEmail = patternEmail.matcher(insertVO.getUemail());
+		Matcher matcherEmail = patternEmail.matcher(insertVO.getUserEmail());
 		if (matcherEmail.matches() == false) {
 			throw new Exception("does not satisfy email pattern");
 		}
@@ -125,13 +125,13 @@ public class UserService {
 	public void updatePw(UserDto updatepwVO) throws Exception {
 
 		Pattern patternPassword = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,10}$");
-		Matcher matcherPassword = patternPassword.matcher(updatepwVO.getUpass());
+		Matcher matcherPassword = patternPassword.matcher(updatepwVO.getUserPass());
 
 		if (matcherPassword.matches() == false) {
 			throw new Exception("does not satisfy password pattern");
 		}
 
-		updatepwVO.setUpass(passwordEncoder.encode(updatepwVO.getUpass()));
+		updatepwVO.setUserPass(passwordEncoder.encode(updatepwVO.getUserPass()));
 
 		userDao.updatePw(updatepwVO);
 	}
@@ -187,13 +187,13 @@ public class UserService {
 			subject = "물론마켓 임시 비밀번호입니다";
 			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 			msg += "<h3 style='color: blue;'>";
-			msg += vo.getUid() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+			msg += vo.getUserId() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
 			msg += "<p>임시 비밀번호 : ";
-			msg += vo.getUpass() + "</p></div>";
+			msg += vo.getUserPass() + "</p></div>";
 		}
 
 		// user email address
-		String mail = vo.getUemail();
+		String mail = vo.getUserEmail();
 		try {
 			HtmlEmail email = new HtmlEmail();
 			email.setDebug(true);
@@ -218,7 +218,7 @@ public class UserService {
 	// find password
 	public int findPw(HttpServletResponse response, UserDto vo) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
-		UserDto userInfo = userDao.read(vo.getUid());
+		UserDto userInfo = userDao.read(vo.getUserId());
 		int result = 0;
 
 		// no registered id
@@ -226,7 +226,7 @@ public class UserService {
 			result = 1;
 
 		// no registered email
-		else if (!vo.getUemail().equals(userInfo.getUemail()))
+		else if (!vo.getUserEmail().equals(userInfo.getUserEmail()))
 			result = 2;
 		else {
 
@@ -242,11 +242,11 @@ public class UserService {
 			for (int i = 0; i < 2; i++)
 				upass += (int) (Math.random() * 26) + 97;
 
-			vo.setUpass(upass);
+			vo.setUserPass(upass);
 			sendEmail(vo, "findpw");
 
 			// password update
-			vo.setUpass(passwordEncoder.encode(upass));
+			vo.setUserPass(passwordEncoder.encode(upass));
 			userDao.updatePw(vo);
 
 			// send password to registered email
@@ -277,13 +277,13 @@ public class UserService {
 
 	public int userLoginStatus(UserDto loginDto) {
 		int result;
-		UserDto ReadVO = read(loginDto.getUid());
+		UserDto ReadVO = read(loginDto.getUserId());
 
 		if (ReadVO == null) {
 			result = 0;
-		} else if (ReadVO.getUcondition().equals("0")) {
+		} else if (ReadVO.getUserStatus().equals("0")) {
 			result = 1;
-		} else if (passwordEncoder.matches(loginDto.getUpass(), ReadVO.getUpass())) {
+		} else if (passwordEncoder.matches(loginDto.getUserPass(), ReadVO.getUserPass())) {
 			result = 2;
 		} else {
 			result = 3;

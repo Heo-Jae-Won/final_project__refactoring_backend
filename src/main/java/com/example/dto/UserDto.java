@@ -4,18 +4,20 @@ import lombok.Data;
 
 @Data
 public class UserDto {
-	private String uid;
-	private String upass;
-	private String uname;
-	private String unickname;
-	private String uemail;
-	private String utel;
-	private String uaddress;
-	private String uprofile;
-	private String ubirth;
-	private String ucondition;
-	private double upoint;
-	private String urole;
+	private int userCode;
+	private String userId;
+	private String userPass;
+	private String userMame;
+	private String userMickname;
+	private String userEmail;
+	private String userTel;
+	private String userAddress;
+	private String userGender;
+	private String userProfile;
+	private String userBirth;
+	private String userStatus;
+	private double userPoint;
+	private String userRole;
 	
 	
 }

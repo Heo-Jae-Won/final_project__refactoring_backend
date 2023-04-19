@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class ReviewDto {
+public class ReviewDto extends PayDto {
 	
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
-	private Date regDate;
-	private String rvcode;
-	private String rvcontent;
-	private String receiver;
-	private String sender;
-	private String paycode;
-	private String pcode;
-	private double point;
+	private Date reviewRegDate;
+	private String reviewCode;
+	private String reviewContent;
+	private String reviewSender;
+	private String reviewReceiver;
+	private double reviewPoint;
+	private String payCode;
+	//payCode는 extends로 가져와보자. ㅡㅡ>안됨.
 	
 	
 	

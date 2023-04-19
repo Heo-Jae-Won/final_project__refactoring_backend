@@ -23,14 +23,14 @@ public class ReviewService {
 
 	public void insertSellerReview(ReviewDto SellerVO) {
 		reviewDao.insert(SellerVO);
-		userDao.updateUpoint(SellerVO.getReceiver());
-		payDao.updateSellerCondition(SellerVO.getPaycode());
+		userDao.updateUpoint(SellerVO.getReviewReceiver());
+		payDao.updateSellerCondition(SellerVO.getPayCode());
 	}
 
 	public void insertBuyerReview(ReviewDto BuyerVO) {
 		reviewDao.insert(BuyerVO);
-		userDao.updateUpoint(BuyerVO.getReceiver());
-		payDao.updateBuyerCondition(BuyerVO.getPaycode());
+		userDao.updateUpoint(BuyerVO.getReviewReceiver());
+		payDao.updateBuyerCondition(BuyerVO.getPayCode());
 	}
 
 	public List<ReviewDto> getLlist(int page, int num, String receiver) {

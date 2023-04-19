@@ -39,16 +39,16 @@ public class ReviewController {
 	public int insert(ReviewDto insertDto) {
 		int result = 0;
 
-		if (payService.read(insertDto.getPaycode()) == null) {
+		if (payService.read(insertDto.getPayCode()) == null) {
 			return result;
 		}
 
 		UUID code = UUID.randomUUID();
-		insertDto.setRvcode(code.toString());
+		insertDto.setReviewCode(code.toString());
 
-		String pwriter = productBoardService.readPwriter(insertDto.getPcode());
+		String pwriter = productBoardService.readPwriter(insertDto.getProductCode());
 
-		if (insertDto.getSender().equals(pwriter)) {
+		if (insertDto.getReviewSender().equals(pwriter)) {
 			reviewService.insertSellerReview(insertDto);
 		} else {
 			reviewService.insertBuyerReview(insertDto);

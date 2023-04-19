@@ -3,39 +3,39 @@
 <mapper namespace="com.example.mapper.ProductBoardLikeMapper">
 
 
- <resultMap id="productBoardLikeInfo" type="productBoardLike">
-		<result column="product_code" property="productCode" 
+	<resultMap id="productBoardLikeInfo" type="productBoardLike">
+		<result column="user_nickname" property="userNickname"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="product_code" property="productCode"
 			jdbcType="INTEGER" javaType="int" />
-		<result column="like_code" property="eventRegDate" 
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="like_status" property="eventTitle"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="event_content" property="eventContent"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="event_writer" property="eventWriter"
-			jdbcType="VARCHAR" javaType="String" />
+		<result column="like_code" property="likeCode"
+			jdbcType="CHAR" javaType="String" />
+		<result column="like_status" property="likeStatus"
+			jdbcType="TINYINT" javaType="short" />
 	</resultMap>
-	
-	
+
+
 	<update id="like">
 		insert into
-		tbl_like_pboard(pcode,unickname,lovecondition,lcode)
-		values(#{pcode},#{unickname},true,#{lcode})
+		tbl_like_pboard(product_code,user_nickname,lovecondition,lcode)
+		values(#{productCode},#{userNickname},true,#{lcode})
 		ON DUPLICATE KEY UPDATE
 		lovecondition = true;
 	</update>
-	
+
 	<update id="dislike">
 		update tbl_like_pboard
 		set lovecondition=false
 		where
-		pcode=#{pcode} and unickname=#{unickname}
+		product_code=#{productCode} and user_nickname=#{userNickname}
 	</update>
-	
-	<select id="likeCount" resultType="com.example.dto.ProductBoardLikeDto">
+
+	<select id="likeCount"
+		resultMap="productBoardLikeInfo">
 		select lovecondition from tbl_like_pboard
-		where pcode=#{pcode} and
-		unickname=#{unickname}
+		where
+		product_code=#{productCode} and
+		user_nickname=#{userNickname}
 	</select>
 
 </mapper>

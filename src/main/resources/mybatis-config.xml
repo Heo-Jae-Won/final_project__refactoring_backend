@@ -5,11 +5,10 @@
 		<typeAlias alias="user" type="com.example.dto.UserDto" />
 		<typeAlias alias="productBoard" type="com.example.dto.ProductBoardDto" />
 		<typeAlias alias="event" type="com.example.dto.EventDto" />
-		<typeAlias alias="eventReply" type="com.example.dto.eventReplyDto" />
+		<typeAlias alias="eventReply" type="com.example.dto.EventReplyDto" />
 		<typeAlias alias="notice" type="com.example.dto.NoticeDto" />
 		<typeAlias alias="pay" type="com.example.dto.PayDto" />
-		<typeAlias alias="productBoardLike" type="com.example.dto.ProductBoardLIkeDto" />
+		<typeAlias alias="productBoardLike" type="com.example.dto.ProductBoardLikeDto" />
 		<typeAlias alias="review" type="com.example.dto.ReviewDto" />
-		<typeAlias alias="transaction" type="com.example.dto.TransactionDto" />
 	</typeAliases>
 </configuration>

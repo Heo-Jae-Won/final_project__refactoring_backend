@@ -2,54 +2,85 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
 
-	<select id="read" resultType="com.example.dto.UserDto">
-		select * from tbl_user where
-		uid=#{uid}
+ <resultMap id="userInfo" type="user">
+		<result column="user_code" property="userCode" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="user_id" property="userId" 
+			jdbcType="DATE" javaType="java.sql.Date" />
+		<result column="user_pass" property="userPass"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_name" property="userMame"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_nickname" property="userNickname"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_email" property="userEmail"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_tel" property="userTel"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_address" property="userAddress"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_gender" property="userGender"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_profile" property="userProfile"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_birth" property="userBirth"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_status" property="userStatus"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_point" property="userPoint"
+			jdbcType="DOUBLE" javaType="double" />
+		<result column="user_role" property="userRole"
+			jdbcType="VARCHAR" javaType="String" />
+	</resultMap>
+	
+	<select id="read" resultMap="userInfo">
+		select * from user where
+		user_id=#{userId}
 	</select>
 
 	<select id="readUnickname" resultType="String">
-		select unickname from
-		tbl_user where
-		unickname=#{unickname}
+		select user_nickname from
+		user where
+		user_nickname=#{userNickname}
 	</select>
 
 	<select id="readUemail" resultType="String">
-		select uid from tbl_user
+		select user_id from user
 		where
-		uemail=#{uemail} and uname=#{uname}
+		user_email=#{userEmail} and user_name=#{userMame}
 	</select>
 
 	<insert id="insert">
 		insert into
-		tbl_user(uid,upass,uname,unickname,uemail,utel,uaddress,ugender,uprofile,ubirth)
-		values(#{uid},#{upass},#{uname},#{unickname},#{uemail},#{utel},#{uaddress},#{ugender},#{uprofile},#{ubirth})
+		user(user_id,user_pass,user_name,user_nickname,user_email,user_tel,user_address,user_gender,user_profile,user_birth)
+		values(#{userId},#{userPass},#{userMame},#{userNickname},#{userEmail},#{userTel},#{userAddress},#{userGender},#{userProfile},#{userBirth})
 	</insert>
 
 	<update id="update">
-		update tbl_user set
-		unickname=#{unickname},
-		uemail=#{uemail},utel=#{utel},uaddress=#{uaddress},uprofile=#{uprofile}
-		where uid=#{uid}
+		update user set
+		user_nickname=#{userNickname},
+		user_email=#{userEmail},user_tel=#{userTel},user_address=#{userAddress},user_profile=#{userProfile}
+		where user_id=#{userId}
 	</update>
 
 	<update id="updatePw">
-		update tbl_user set upass = #{upass} where
-		uid =#{uid}
+		update user set user_pass = #{userPass} where
+		user_id =#{userId}
 	</update>
 
 	<update id="deactivate">
-		update tbl_user set ucondition='0' where uid=#{uid}
+		update user set user_status='0' where user_id=#{userId}
 	</update>
 
 	<update id="restore">
-		update tbl_user set ucondition='1' where uid=#{uid}
+		update user set user_status='1' where user_id=#{userId}
 	</update>
 
 	<update id="updateUpoint">
-		update tbl_user set upoint=(select avg(point) from
-		tbl_review where
-		receiver=#{receiver})
-		where unickname=#{receiver}
+		update user set user_point=(select avg(review_point) from
+		review where
+		review_receiver=#{reviewReceiver})
+		where user_nickname=#{reviewReceiver}
 	</update>
 
 </mapper>

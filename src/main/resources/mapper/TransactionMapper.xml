@@ -1,28 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.TransactionMapper">
-	<select id="buyList" resultType="com.example.dto.PayDto">
-		select payprice, buyer,seller,paycode,pcode,buyercondition, regDate from
-		tbl_pay where buyer=#{buyer}
-		order by regDate
+
+ <resultMap id="transactionInfo" type="pay">
+		<result column="product_code" property="productCode" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_price" property="payPrice" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_seller_review" property="paySellerReview" 
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_buyer_review" property="payBuyerReview"
+			jdbcType="INTEGER" javaType="int" />
+		<result column="pay_type" property="payType"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_email" property="payEmail"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_code" property="payCode"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_buyer" property="payBuyer"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_seller" property="paySeller"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="pay_regDate" property="payRegDate"
+			jdbcType="DATE" javaType="java.sql.Date" />
+	</resultMap>
+	
+	
+	<select id="buyList" resultMap="transaction">
+		select pay_price, pay_buyer,pay_seller,pay_code,product_code,pay_buyer_review, pay_regDate from
+		pay where pay_buyer=#{payBuyer}
+		order by pay_regDate
 		limit #{start}, 6
 	</select>
-	<select id="sellList" resultType="com.example.dto.PayDto">
-		select payprice, buyer,seller,paycode,pcode, regDate,sellercondition from
-		tbl_pay where seller=#{seller}
-		order by regDate
+	<select id="sellList" resultMap="transaction">
+		select payprice, pay_buyer,pay_seller,pay_code,product_code, pay_regDate,pay_seller_review from
+		pay where pay_seller=#{paySeller}
+		order by pay_regDate
 		limit #{start}, 6
 	</select>
 
 	<select id="buyTotal" resultType="int">
-		select count(*) from tbl_pay where buyer=#{buyer}
+		select count(*) from pay where pay_buyer=#{payBuyer}
 	</select>
 
 	<select id="sellTotal" resultType="int">
-		select count(*) from tbl_pay where buyer=#{seller}
+		select count(*) from pay where pay_seller=#{paySeller}
 	</select>
 
-	<select id="sellchart" resultType="com.example.dto.PayDto">
+	<select id="sellchart" resultMap="transaction">
 		select
 		month(aa.tmonth) month,
 		 ifnull(sum(p.payprice),0) payprice
@@ -30,8 +55,8 @@
 	from
 		temp_month aa
 			left join 
-            	tbl_pay p 
-                on (month(p.regDate) = month(aa.tmonth) and p.seller=#{seller})
+            	pay p 
+                on (month(p.pay_regDate) = month(aa.tmonth) and p.pay_seller=#{paySeller})
     		group by 
             	tmonth;
 	</select>
@@ -44,8 +69,8 @@
 	from
 		temp_month aa
 			left join 
-            	tbl_pay p 
-                on (month(p.regDate) = month(aa.tmonth) and p.buyer=#{buyer})
+            	pay p 
+                on (month(p.pay_regDate) = month(aa.tmonth) and p.pay_buyer=#{payBuyer})
     		group by 
             	tmonth;
 	</select>
