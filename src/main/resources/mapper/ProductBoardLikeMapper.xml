@@ -17,22 +17,22 @@
 
 	<update id="like">
 		insert into
-		tbl_like_pboard(product_code,user_nickname,lovecondition,lcode)
-		values(#{productCode},#{userNickname},true,#{lcode})
+		product_board_like(product_code,user_nickname,like_status,like_code)
+		values(#{productCode},#{userNickname},true,#{likeCode})
 		ON DUPLICATE KEY UPDATE
-		lovecondition = true;
+		like_status = true;
 	</update>
 
 	<update id="dislike">
-		update tbl_like_pboard
-		set lovecondition=false
+		update product_board_like
+		set like_status=false
 		where
 		product_code=#{productCode} and user_nickname=#{userNickname}
 	</update>
 
 	<select id="likeCount"
 		resultMap="productBoardLikeInfo">
-		select lovecondition from tbl_like_pboard
+		select like_status from product_board_like
 		where
 		product_code=#{productCode} and
 		user_nickname=#{userNickname}

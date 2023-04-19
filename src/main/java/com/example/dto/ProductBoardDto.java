@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class ProductBoardDto extends UserDto {
-	private String productCode;
+public class ProductBoardDto {
+	private int productCode;
 	@NotBlank
 	private String productContent;
 	@NotBlank
@@ -29,7 +29,8 @@ public class ProductBoardDto extends UserDto {
 	private Date productRegDate;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date productUpdateDate;
-	
+	private double userPoint;
+	private String userId;
 
 	
 

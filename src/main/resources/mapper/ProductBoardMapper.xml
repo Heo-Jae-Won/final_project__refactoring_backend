@@ -15,6 +15,8 @@
 			jdbcType="VARCHAR" javaType="String" />
 		<result column="product_price" property="productPrice"
 			jdbcType="INTEGER" javaType="int" />
+		<result column="product_status" property="productStatus"
+			jdbcType="INTEGER" javaType="int" />
 		<result column="product_regDate" property="productRegDate"
 			jdbcType="DATE" javaType="java.sql.Date" />
 		<result column="product_updateDate"
@@ -25,63 +27,67 @@
 			jdbcType="INTEGER" javaType="int" />
 		<result column="product_name" property="productName"
 			jdbcType="VARCHAR" javaType="String" />
+		<result column="user_point" property="userPoint"
+			jdbcType="DOUBLE" javaType="double" />
+		<result column="user_id" property="userId"
+			jdbcType="VARCHAR" javaType="String" />
 	</resultMap>
 
 	<select id="list" resultMap="productBoardInfo">
 		select
-		pcode, ptitle, pcontent,
-		pwriter, pimage, pprice, regDate
-		updateDate, viewcnt, plike,pname
-		from tbl_pboard
+		product_code, product_title, product_content,
+		product_writer, product_image, product_price, product_regDate
+		product_updateDate, product_viewcnt, product_likecnt,product_name
+		from product_board
 
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_title LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE pcontent LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_content LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if
 			test='searchType != null &amp;&amp; searchType.equals("제목과 내용")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and pcondition=0
+			WHERE product_title LIKE concat('%', #{keyword}, '%') and product_status=0
 			or
-			pcontent LIKE concat('%', #{keyword}, '%') and pcondition=0
+			product_content LIKE concat('%', #{keyword}, '%') and product_status=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("작성자")'>
-			WHERE pwriter LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_writer LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if test='searchType == null or searchType.equals("")'>
-			WHERE pcondition=0
+			WHERE product_status=0
 		</if>
 
 		limit #{start}, #{num}
 	</select>
 
 	<select id="getTotal" resultType="int">
-		select count(*) from tbl_pboard
+		select count(*) from product_board
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_title LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("내용")'>
-			WHERE pcontent LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_content LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if test='searchType != null and searchType.equals("제목과 내용")'>
-			WHERE ptitle LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
-			or pcontent
+			WHERE product_title LIKE concat('%', #{keyword}, '%') and
+			product_status=0
+			or product_content
 			LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			product_status=0
 		</if>
 		<if test='searchType != null &amp;&amp; searchType.equals("작성자")'>
-			WHERE pwriter LIKE concat('%', #{keyword}, '%') and
-			pcondition=0
+			WHERE product_writer LIKE concat('%', #{keyword}, '%') and
+			product_status=0
 		</if>
 		<if test='searchType == null or searchType.equals("")'>
-			WHERE pcondition=0
+			WHERE product_status=0
 		</if>
 
 	</select>
@@ -89,81 +95,81 @@
 
 	<select id="read" resultMap="productBoardInfo">
 		select
-		pcode, ptitle, pcontent,
-		pwriter, pimage, pprice, regDate, viewcnt,
-		plike, pname,ROUND(upoint,2)
-		upoint,pcondition,uid
-		from tbl_pboard p
-		inner join tbl_user u
+		product_code, product_title, product_content,
+		product_writer, product_image, product_price, product_regDate, product_viewcnt,
+		product_likecnt, product_name,ROUND(user_point,2)
+		user_point,product_status,user_id
+		from product_board p
+		inner join user u
 		on
-		u.unickname=p.pwriter
-		where pcode=#{pcode}
+		u.user_nickname=p.product_writer
+		where product_code=#{productCode}
 	</select>
 
 	<select id="readPwriterId" resultType="string">
 		select
-		uid
-		from tbl_pboard p
-		inner join tbl_user u
-		on u.unickname=p.pwriter
-		where pcode=#{pcode}
+		user_id
+		from product_board p
+		inner join user u
+		on u.user_nickname=p.product_writer
+		where product_code=#{productCode}
 	</select>
 
 
 	<insert id="insert">
-		insert into tbl_pboard
-		(ptitle,pcontent,pwriter,pimage,pprice,pname)
+		insert into product_board
+		(product_title,product_content,product_writer,product_image,product_price,product_name)
 		values
-		(#{ptitle},#{pcontent},#{pwriter},#{pimage},#{pprice},#{pname})
+		(#{productTitle},#{productContent},#{productWriter},#{productImage},#{productPrice},#{productName})
 	</insert>
 
 	<delete id="delete">
-		delete from tbl_pboard where pcode=#{pcode}
+		delete from product_board where product_code=#{productCode}
 	</delete>
 
 	<select id="readPwriter" resultType="string">
-		select pwriter from
-		tbl_pboard where pcode=#{pcode}
+		select product_writer from
+		product_board where product_code=#{productCode}
 	</select>
 
 	<select id="readPcondition" resultType="int">
-		select pcondition from
-		tbl_pboard where pcode=#{pcode}
+		select product_status from
+		product_board where product_code=#{productCode}
 	</select>
 
 	<update id="update">
-		update tbl_pboard set ptitle=#{ptitle},
-		pcontent=#{pcontent}, pimage=#{pimage}, pprice=#{pprice},
-		pname=#{pname}
+		update product_board set product_title=#{productTitle},
+		product_content=#{productContent}, product_image=#{productImage}, product_price=#{productPrice},
+		product_name=#{productName}
 		where
-		pcode=#{pcode}
+		product_code=#{productCode}
 	</update>
 
 	<update id="updateViewcnt">
-		update tbl_pboard
-		set viewcnt=viewcnt+1
+		update product_board
+		set product_viewcnt=product_viewcnt+1
 		where
-		pcode=#{pcode}
+		product_code=#{productCode}
 	</update>
 
 	<select id="best" resultType="com.example.dto.ProductBoardDto">
-		select * from tbl_pboard
+		select * from product_board
 		order by
-		plike desc
+		product_likecnt desc
 		limit 0,16;
 	</select>
 
 	<update id="updateLove">
-		update tbl_pboard p set plike=
+		update product_board p set product_likecnt=
 		(select count(*) from
-		tbl_like_pboard l
-		where lovecondition=1 and p.pcode=l.pcode)
+		product_board_like l
+		where like_status=1 and p.product_code=l.product_code)
 	</update>
 
 	<update id="updateSold">
-		update tbl_pboard set pcondition=1
+		update product_board set product_status=1
 		where
-		pcode=#{pcode}
+		product_code=#{productCode}
 	</update>
 
 

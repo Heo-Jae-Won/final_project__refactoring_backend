@@ -33,7 +33,7 @@
 		limit #{start}, 6
 	</select>
 	<select id="sellList" resultMap="transaction">
-		select payprice, pay_buyer,pay_seller,pay_code,product_code, pay_regDate,pay_seller_review from
+		select pay_price, pay_buyer,pay_seller,pay_code,product_code, pay_regDate,pay_seller_review from
 		pay where pay_seller=#{paySeller}
 		order by pay_regDate
 		limit #{start}, 6
@@ -50,7 +50,7 @@
 	<select id="sellchart" resultMap="transaction">
 		select
 		month(aa.tmonth) month,
-		 ifnull(sum(p.payprice),0) payprice
+		 ifnull(sum(p.pay_price),0) payprice
        
 	from
 		temp_month aa
@@ -64,7 +64,7 @@
 	<select id="buychart" resultType="com.example.dto.PayDto">
 		select
 		month(aa.tmonth) month,
-		 ifnull(sum(p.payprice),0) payprice
+		 ifnull(sum(p.pay_price),0) payprice
        
 	from
 		temp_month aa

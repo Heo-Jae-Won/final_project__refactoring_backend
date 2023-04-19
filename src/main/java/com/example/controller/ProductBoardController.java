@@ -41,7 +41,7 @@ public class ProductBoardController {
 
 	@ResponseBody
 	@RequestMapping("/api/pboard/readpcondition/{pcode}")
-	public int readPcondition(@PathVariable String pcode) {
+	public int readPcondition(@PathVariable int pcode) {
 
 		return pboardService.readPcondition(pcode);
 	};

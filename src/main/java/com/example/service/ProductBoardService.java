@@ -118,23 +118,23 @@ public class ProductBoardService {
 		productBoardDao.updateLove();
 	}
 
-	public void updateSold(String productCode) {
+	public void updateSold(int productCode) {
 		productBoardDao.updateSold(productCode);
 	}
 
-	public int readPcondition(String productCode) {
+	public int readPcondition(int productCode) {
 		int productStatus = productBoardDao.readPcondition(productCode);
 
 		return productStatus;
 	}
 
-	public String readPwriterId(String productCode) {
+	public String readPwriterId(int productCode) {
 		String productWriterId = productBoardDao.readPwriterId(productCode);
 
 		return productWriterId;
 	}
 
-	public String readPwriter(String productCode) {
+	public String readPwriter(int productCode) {
 		String productWriter = productBoardDao.readPwriter(productCode);
 
 		return productWriter;

@@ -21,30 +21,30 @@
 	</resultMap>
 
 
-	<select id="list" resultMap="reviewInfo">
-		select * from tbl_review
-		where
-		receiver=#{receiver}
-		order by regDate
-		limit #{start},#{num}
+		<select id="list" resultMap="reviewInfo">
+			select * from review
+			where
+			review_receiver=#{review_receiver}
+			order by review_regDate
+			limit #{start},#{num}
 
-	</select>
+		</select>
 
-	<select id="read" resultMap="reviewInfo">
-		select * from tbl_review where
-		receiver=#{receiver}
-	</select>
+		<select id="read" resultMap="reviewInfo">
+			select * from review where
+			review_receiver=#{review_receiver}
+		</select>
 
-	<insert id="insert">
-		insert into
-		tbl_review(rvcode,rvcontent,sender,receiver,paycode,point)
-		values(#{rvcode},#{rvcontent},#{sender},#{receiver},#{paycode},#{point})
-	</insert>
+		<insert id="insert">
+			insert into
+			review(review_code,review_content,review_sender,review_receiver,pay_code,review_point)
+			values(#{reviewCode},#{reviewContent},#{reviewSender},#{review_receiver},#{payCode},#{reviewPoint})
+		</insert>
 
-	<select id="total" resultType="int">
-		select count(*) from tbl_review
-		where receiver=#{receiver};
-	</select>
+		<select id="total" resultType="int">
+			select count(*) from review
+			where review_receiver=#{review_receiver};
+		</select>
 
 
 

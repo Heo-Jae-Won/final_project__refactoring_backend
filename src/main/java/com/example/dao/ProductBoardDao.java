@@ -64,20 +64,20 @@ public class ProductBoardDao {
 		session.update(namespace + ".updateLove");
 	}
 
-	public void updateSold(String pcode) {
+	public void updateSold(int pcode) {
 		session.update(namespace + ".updateSold", pcode);
 	}
 
-	public int readPcondition(String pcode) {
+	public int readPcondition(int pcode) {
 		return session.selectOne(namespace + ".readPcondition", pcode);
 	}
 
-	public String readPwriterId(String pcode) {
+	public String readPwriterId(int pcode) {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".readPwriterId", pcode);
 	}
 
-	public String readPwriter(String pcode) {
+	public String readPwriter(int pcode) {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".readPwriter", pcode);
 	}
