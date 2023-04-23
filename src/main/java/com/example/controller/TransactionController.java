@@ -20,7 +20,7 @@ public class TransactionController {
 	@Autowired
 	private final TransactionService transactionService;
 
-	@RequestMapping("/api/tradeinfo/buylist/{buyer}")
+	@RequestMapping("/api/tradeInfo/buyList/{buyer}")
 	public TransactionListResponse buyList(@PathVariable String buyer, @Param("page") int page) throws Exception {
 		TransactionListResponse transactionListResponse = new TransactionListResponse();
 		transactionListResponse.setBuyList(transactionService.getBuyList(buyer, page));
@@ -29,7 +29,7 @@ public class TransactionController {
 		return transactionListResponse;
 	};
 
-	@RequestMapping("/api/tradeinfo/selllist/{seller}")
+	@RequestMapping("/api/tradeInfo/sellList/{seller}")
 	public TransactionListResponse sellList(@PathVariable String seller, @Param("page") int page) throws Exception {
 		TransactionListResponse transactionListResponse = new TransactionListResponse();
 		transactionListResponse.setSellList(transactionService.getSellList(seller, page));
@@ -38,7 +38,7 @@ public class TransactionController {
 		return transactionListResponse;
 	};
 
-	@RequestMapping("/api/tradeinfo/sellchart/{seller}")
+	@RequestMapping("/api/tradeInfo/sellChart/{seller}")
 	public TransactionListResponse sellchart(@PathVariable String seller) throws Exception {
 		TransactionListResponse transactionListResponse = new TransactionListResponse();
 		transactionListResponse.setSellListChart(transactionService.getSellChart(seller));
@@ -46,7 +46,7 @@ public class TransactionController {
 		return transactionListResponse;
 	};
 
-	@RequestMapping("/api/tradeinfo/buychart/{buyer}")
+	@RequestMapping("/api/tradeInfo/buyChart/{buyer}")
 	public TransactionListResponse buyChart(@PathVariable String buyer) throws Exception {
 		TransactionListResponse transactionListResponse = new TransactionListResponse();
 		transactionListResponse.setBuyListChart(transactionService.getBuyChart(buyer));

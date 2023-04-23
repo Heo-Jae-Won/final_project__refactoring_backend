@@ -20,7 +20,7 @@
 		<result column="product_regDate" property="productRegDate"
 			jdbcType="DATE" javaType="java.sql.Date" />
 		<result column="product_updateDate"
-			property="productUpdateDate" jdbcType="VARCHAR" javaType="String" />
+			property="productUpdateDate" jdbcType="DATE" javaType="java.sql.Date" />
 		<result column="product_viewcnt" property="productViewcnt"
 			jdbcType="INTEGER" javaType="int" />
 		<result column="product_likecnt" property="productLikecnt"

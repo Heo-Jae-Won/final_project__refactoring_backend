@@ -2,18 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EventMapper">
 
-    <resultMap id="eventInfo" type="event">
-		<result column="event_code" property="eventCode" 
-			jdbcType="INTEGER" javaType="int" />
-		<result column="event_regDate" property="eventRegDate" 
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="event_title" property="eventTitle"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="event_content" property="eventContent"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="event_writer" property="eventWriter"
-			jdbcType="VARCHAR" javaType="String" />
-	</resultMap>
+    <resultMap id="eventInfo" type="event"/>
+	
 	
 	
 	 <select id="list"
@@ -38,7 +28,7 @@
 	</select>
 
 	<select id="getTotal" resultType="int">
-		select count(*) from tbl_event
+		select count(*) from event
 		<if test='searchType != null &amp;&amp; searchType.equals("제목")'>
 			WHERE event_title LIKE concat('%', #{keyword}, '%')
 		</if>

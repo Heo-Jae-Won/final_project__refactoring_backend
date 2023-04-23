@@ -23,29 +23,15 @@
 		in the /WEB-INF/views directory -->
 
 	<!-- 화면을 어떻게 연결할 것인지 선언하는 부분 1순위 -->
-	<beans:bean
-		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-		<beans:property name="order" value="1" />
-	</beans:bean>
-	<!-- 만들어둔 layout과 tiles를 쓰기 위해 선언하는 부분 -->
-	<beans:bean
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions"
-			value="/WEB-INF/tiles/tiles.xml" />
-	</beans:bean>
 	<!-- 화면을 어떻게 연결할 것인지 선언하는 부분 2순위 -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2" />
 	</beans:bean>
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="377759039" />
-	</beans:bean>
-	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="c:/upload/" />
 	</beans:bean>
 
 	<context:component-scan

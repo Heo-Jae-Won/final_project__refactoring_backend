@@ -27,8 +27,8 @@ public class EventReplyService {
 		eventReplyDao.updateAdminCondition(ercode);
 	}
 
-	public List<EventReplyDto> list(int page, int num, int ecode) {
-		List<EventReplyDto> eventReplyList = eventReplyDao.list(page, num, ecode);
+	public List<EventReplyDto> list(int page, int num, int eventCode) {
+		List<EventReplyDto> eventReplyList = eventReplyDao.list(page, num, eventCode);
 
 		return eventReplyList;
 	}

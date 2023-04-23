@@ -20,11 +20,11 @@ public class EventReplyDao {
 
 	String namespace = "com.example.mapper.EventReplyMapper";
 
-	public List<EventReplyDto> list(int page, int num, int ecode) {
+	public List<EventReplyDto> list(int page, int num, int eventCode) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", (page - 1) * num);
 		map.put("num", num);
-		map.put("ecode", ecode);
+		map.put("eventCode", eventCode);
 		return session.selectList(namespace + ".list", map);
 	}
 

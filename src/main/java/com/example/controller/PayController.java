@@ -21,18 +21,18 @@ import com.siot.IamportRestClient.response.Payment;
 @RestController
 @RequestMapping("/payment")
 @CrossOrigin(origins ="http://localhost:3000")
-public class PayRestController {
+public class PayController {
 
 	@Autowired
 	private PayService payService;
 
-	public PayRestController(PayService payService) {
+	public PayController(PayService payService) {
 		this.payService = payService;
 	}
 
 	private IamportClient api;
 
-	public PayRestController() {
+	public PayController() {
 		this.api = new IamportClient("3766738282401126",
 				"cvQ9Bb92gsKkhmUVoAzKJWqZBIN5qL9IS0yNr9X8fQt46FQ7PmkNAddqRVDtqm5AHf2ezN8QtBgOjtU0");
 	}

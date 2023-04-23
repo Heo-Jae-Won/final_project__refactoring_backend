@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration scan="true" scanPeriod="30 seconds">
-	<property name="LOGS_PATH" value="c:/logs" />
-
+			<property name="LOGS_PATH" value="C:/logs" />
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -17,7 +16,7 @@
 		<!-- 파일경로 설정 -->
 		<file>${LOGS_PATH}/logback.log</file>
 
-		<!-- Rolling 정책 -->
+		<!-- Rolling 정책. Profile마다 다르게 적용하기. local은 D:/logs에, 배포는 /var/log/tomcat/에다가 -->
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 일자별 로그파일 최대 보관주기(일) -->
@@ -50,6 +49,7 @@
 		</filter>
 		<!-- 파일경로 설정 -->
 		<file>${LOGS_PATH}/error.log</file>
+
 		<!-- Rolling 정책 -->
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -59,7 +59,7 @@
 			<fileNamePattern>${LOGS_PATH}/error.%d{yyyy-MM-dd}.%i.log.gz
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 				<!-- 파일당 최고 용량 -->
 				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
@@ -72,61 +72,51 @@
 		</encoder>
 	</appender>
 
-	<logger name="org.springframework" level="info">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-
-	<logger name="jdbc" level="OFF" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- 커넥션 open close 이벤트를 로그로 남긴다. -->
-	<logger name="jdbc.connection" level="OFF" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. -->
-	<logger name="jdbc.sqlonly" level="OFF" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. -->
-	<logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 
-		추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다. -->
-	<logger name="jdbc.audit" level="OFF" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. -->
-	<logger name="jdbc.resultset" level="OFF" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />
-	</logger>
-	<!-- SQL 결과 조회된 데이터의 table을 로그로 남긴다. -->
-	<logger name="jdbc.resultsettable" level="DEBUG"
+	 <logger name="com.example.dao" level="debug"
 		additivity="false">
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="Error" />
 	</logger>
 
-
+	<logger
+		name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor"
+		level="debug" additivity="false">
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="Error" />
+	</logger>
+	
+	<logger
+		name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"
+		level="debug" additivity="false">
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="Error" />
+	</logger>
+	
+	<logger
+		name="org.springframework.web.servlet.DispatcherServlet"
+		level="debug" additivity="false">
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="Error" />
+	</logger> 
+	
+	<logger
+		name="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"
+		level="debug" additivity="false">
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="Error" />
+	</logger> 
+	
 
 	<root level="debug">
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="Error" />
 	</root>
+
+
 </configuration>

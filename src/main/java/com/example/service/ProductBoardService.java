@@ -22,6 +22,7 @@ public class ProductBoardService {
 
 	private final ProductBoardDao productBoardDao;
 
+	//transaction이 안되는데 이유를 알아봐야 할 듯?
 	public ProductBoardDto read(String productCode) throws Exception {
 		productBoardDao.updateViewcnt(productCode);
 		
@@ -46,7 +47,7 @@ public class ProductBoardService {
 			throw new Exception("no Image file");
 		}
 
-		String path = "c:/upload/project/";
+		String path = "/upload/";
 		MultipartFile file = multi.getFile("file");
 
 		String contentType = file.getContentType();
@@ -59,7 +60,7 @@ public class ProductBoardService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		insertDto.setProductImage("/upload/project/" + file.getOriginalFilename());
+		insertDto.setProductImage(path + file.getOriginalFilename());
 		productBoardDao.insert(insertDto);
 	};
 
@@ -71,7 +72,7 @@ public class ProductBoardService {
 			return;
 		}
 
-		String path = "/upload/project/";
+		String path = "/upload/";
 		MultipartFile file = multi.getFile("file");
 
 		String contentType = file.getContentType();
@@ -88,7 +89,7 @@ public class ProductBoardService {
 		}
 
 		// update DB
-		updateVO.setProductImage("/upload/project/" + file.getOriginalFilename());
+		updateVO.setProductImage(path + file.getOriginalFilename());
 		productBoardDao.update(updateVO);
 	};
 
@@ -122,11 +123,11 @@ public class ProductBoardService {
 		productBoardDao.updateSold(productCode);
 	}
 
-	public int readPcondition(int productCode) {
-		int productStatus = productBoardDao.readPcondition(productCode);
-
-		return productStatus;
-	}
+//	public int readPcondition(int productCode) {
+//		int productStatus = productBoardDao.readPcondition(productCode);
+//
+//		return productStatus;
+//	}
 
 	public String readPwriterId(int productCode) {
 		String productWriterId = productBoardDao.readPwriterId(productCode);

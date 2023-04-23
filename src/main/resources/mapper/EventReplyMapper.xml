@@ -2,18 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.EventReplyMapper">
 
-	<resultMap id="eventReplyInfo" type="eventReply">
-		<result column="event_reply_code" property="eventReplyCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="event_code" property="eventCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="event_reply_regDate"
-			property="eventReplyRegDate" jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="event_reply_content"
-			property="eventReplyContent" jdbcType="VARCHAR" javaType="String" />
-		<result column="event_reply_writer" property="eventReplyWriter"
-			jdbcType="VARCHAR" javaType="String" />
-	</resultMap>
+	<resultMap id="eventReplyInfo" type="eventReply"/>
 
 
 

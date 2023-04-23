@@ -23,7 +23,7 @@ public class ProductBoardLikeController {
 	@Autowired
 	private final ProductBoardLikeService productBoardLikeService;
 
-	@RequestMapping(value = "/api/pboard/user/like", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/api/productBoard/user/like", method = RequestMethod.PATCH)
 	public void like(@RequestBody ProductBoardLikeDto pboardLikeDto) {
 
 		if (pboardLikeDto.getLikeCode() == null) {
@@ -33,15 +33,15 @@ public class ProductBoardLikeController {
 		productBoardLikeService.like(pboardLikeDto);
 	}
 
-	@RequestMapping(value = "/api/pboard/user/dislike", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/api/productBoard/user/dislike", method = RequestMethod.PATCH)
 	public void dislike(@RequestBody ProductBoardLikeDto pboardDislikeDto) {
 		
 		productBoardLikeService.dislike(pboardDislikeDto);
 	}
 
-	@RequestMapping("/api/pboard/like/{pcode}/{unickname}")
-	public ProductBoardLikeDto likeCount(@PathVariable String pcode, @PathVariable String unickname) {
-		ProductBoardLikeDto likeCount = productBoardLikeService.likeCount(pcode, unickname);
+	@RequestMapping("/api/productBoard/like/{productCode}/{userNickname}")
+	public ProductBoardLikeDto likeCount(@PathVariable String productCode, @PathVariable String userNickname) {
+		ProductBoardLikeDto likeCount = productBoardLikeService.likeCount(productCode, userNickname);
 
 		return likeCount;
 	}

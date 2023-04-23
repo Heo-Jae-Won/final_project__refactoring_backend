@@ -3,19 +3,7 @@
 <mapper namespace="com.example.mapper.NoticeMapper">
 
 
-	<resultMap id="noticeInfo" type="notice">
-		<result column="notice_code" property="noticeCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="notice_regDate" property="noticeRegDate"
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="notice_content" property="noticeContent"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="notice_writer" property="noticeWriter"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="notice_title" property="noticeTitle"
-			jdbcType="VARCHAR" javaType="String" />
-	</resultMap>
-
+	<resultMap id="noticeInfo" type="notice"/>
 
 	<select id="list" resultMap="noticeInfo">
 		select * from notice

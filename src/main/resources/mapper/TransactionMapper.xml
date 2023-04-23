@@ -26,13 +26,13 @@
 	</resultMap>
 	
 	
-	<select id="buyList" resultMap="transaction">
+	<select id="buyList" resultMap="transactionInfo">
 		select pay_price, pay_buyer,pay_seller,pay_code,product_code,pay_buyer_review, pay_regDate from
 		pay where pay_buyer=#{payBuyer}
 		order by pay_regDate
 		limit #{start}, 6
 	</select>
-	<select id="sellList" resultMap="transaction">
+	<select id="sellList" resultMap="transactionInfo">
 		select pay_price, pay_buyer,pay_seller,pay_code,product_code, pay_regDate,pay_seller_review from
 		pay where pay_seller=#{paySeller}
 		order by pay_regDate
@@ -47,32 +47,32 @@
 		select count(*) from pay where pay_seller=#{paySeller}
 	</select>
 
-	<select id="sellchart" resultMap="transaction">
+	<select id="sellchart" resultMap="transactionInfo">
 		select
 		month(aa.tmonth) month,
-		 ifnull(sum(p.pay_price),0) payprice
+		 ifnull(sum(p.pay_price),0) payPrice
        
 	from
-		temp_month aa
+		temp_month tempMonth
 			left join 
             	pay p 
-                on (month(p.pay_regDate) = month(aa.tmonth) and p.pay_seller=#{paySeller})
+                on (month(p.pay_regDate) = month(tempMonth.tmonth) and p.pay_seller=#{paySeller})
     		group by 
-            	tmonth;
+            	temp_month;
 	</select>
 	
-	<select id="buychart" resultType="com.example.dto.PayDto">
+	<select id="buychart" resultMap="transactionInfo">
 		select
-		month(aa.tmonth) month,
-		 ifnull(sum(p.pay_price),0) payprice
+		month(tempMonth.tmonth) month,
+		 ifnull(sum(p.pay_price),0) payPrice
        
 	from
-		temp_month aa
+		temp_month tempMonth
 			left join 
             	pay p 
-                on (month(p.pay_regDate) = month(aa.tmonth) and p.pay_buyer=#{payBuyer})
+                on (month(p.pay_regDate) = month(tempMonth.tmonth) and p.pay_buyer=#{payBuyer})
     		group by 
-            	tmonth;
+            	temp_month;
 	</select>
 	
 </mapper>

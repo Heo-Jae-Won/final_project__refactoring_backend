@@ -12,7 +12,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String tiles( Model model,HttpSession session) {
-		return "home.tiles";
+		return "home";
 	}
 	
 

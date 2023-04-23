@@ -50,8 +50,8 @@ public class UserDao {
 
 	public String readUemail(String uemail, String uname) {
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("uemail", uemail);
-		map.put("uname", uname);
+		map.put("userEmail", uemail);
+		map.put("userName", uname);
 		return session.selectOne(namespace + ".readUemail", map);
 	}
 

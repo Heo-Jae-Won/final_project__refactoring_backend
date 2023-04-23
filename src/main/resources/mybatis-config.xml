@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
 	<typeAliases>
 		<typeAlias alias="user" type="com.example.dto.UserDto" />
-		<typeAlias alias="productBoard" type="com.example.dto.ProductBoardDto" />
+		<typeAlias alias="productBoard"
+			type="com.example.dto.ProductBoardDto" />
 		<typeAlias alias="event" type="com.example.dto.EventDto" />
-		<typeAlias alias="eventReply" type="com.example.dto.EventReplyDto" />
+		<typeAlias alias="eventReply"
+			type="com.example.dto.EventReplyDto" />
 		<typeAlias alias="notice" type="com.example.dto.NoticeDto" />
 		<typeAlias alias="pay" type="com.example.dto.PayDto" />
-		<typeAlias alias="productBoardLike" type="com.example.dto.ProductBoardLikeDto" />
+		<typeAlias alias="productBoardLike"
+			type="com.example.dto.ProductBoardLikeDto" />
 		<typeAlias alias="review" type="com.example.dto.ReviewDto" />
 	</typeAliases>
+
 </configuration>

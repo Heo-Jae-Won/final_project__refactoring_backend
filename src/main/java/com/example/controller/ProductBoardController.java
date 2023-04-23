@@ -6,12 +6,12 @@ import javax.validation.Valid;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dto.ProductBoardDto;
@@ -20,7 +20,7 @@ import com.example.service.ProductBoardService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductBoardController {
@@ -28,26 +28,23 @@ public class ProductBoardController {
 	@Autowired
 	private final ProductBoardService pboardService;
 
-	@ResponseBody
-	@RequestMapping("/api/pboard")
+	@RequestMapping("/api/productBoard")
 	public ProductListResponse list(@Param("page") int page, @Param("num") int num,
 			@Param("searchType") String searchType, @Param("keyword") String keyword) throws Exception {
 		ProductListResponse productListResponse = new ProductListResponse();
 		productListResponse.setProductList(pboardService.getList(page, num, searchType, keyword));
-		productListResponse.setProductListToal(pboardService.getTotal(searchType, keyword));
+		productListResponse.setProductListTotal(pboardService.getTotal(searchType, keyword));
 
 		return productListResponse;
 	};
 
-	@ResponseBody
-	@RequestMapping("/api/pboard/readpcondition/{pcode}")
-	public int readPcondition(@PathVariable int pcode) {
+//	@RequestMapping("/api/productBoard/readpcondition/{productCode}")
+//	public int readPcondition(@PathVariable int productCode) {
+//
+//		return pboardService.readPcondition(productCode);
+//	};
 
-		return pboardService.readPcondition(pcode);
-	};
-
-	@ResponseBody
-	@RequestMapping(value = "/api/pboard/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/productBoard/update", method = RequestMethod.POST)
 	public void update(ProductBoardDto updateVO, MultipartHttpServletRequest multi) throws Exception {
 
 		// file path designate
@@ -55,39 +52,34 @@ public class ProductBoardController {
 		pboardService.update(updateVO, multi);
 	};
 
-	@ResponseBody
-	@RequestMapping("/api/pboard/{pcode}")
-	public ProductBoardDto readviewcnt(@PathVariable String pcode) throws Exception {
+	@RequestMapping("/api/productBoard/{productCode}")
+	public ProductBoardDto readviewcnt(@PathVariable String productCode) throws Exception {
 
-		return pboardService.read(pcode);
+		return pboardService.read(productCode);
 	};
 
-	@ResponseBody
-	@RequestMapping("/api/pboard/data/{pcode}")
-	public ProductBoardDto read(@PathVariable String pcode) throws Exception {
+	@RequestMapping("/api/productBoard/data/{productCode}")
+	public ProductBoardDto read(@PathVariable String productCode) throws Exception {
 		
-		return pboardService.getProductInfo(pcode);
+		return pboardService.getProductInfo(productCode);
 	};
 
-	@ResponseBody
-	@RequestMapping(value = "/api/pboard", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/productBoard", method = RequestMethod.POST)
 	public void insert(@Valid ProductBoardDto insertVO, MultipartHttpServletRequest multi) throws Exception {
 
 		pboardService.insert(insertVO, multi);
 	};
 
-	@ResponseBody
-	@RequestMapping("/api/pboard/best")
+	@RequestMapping("/api/productBoard/best")
 	public List<ProductBoardDto> getBestItems() {
 		
 		return pboardService.getBestItems();
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/api/pboard/{pcode}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable String pcode) {
+	@RequestMapping(value = "/api/productBoard/{productCode}", method = RequestMethod.DELETE)
+	public void delete(@PathVariable String productCode) {
 		
-		pboardService.delete(pcode);
+		pboardService.delete(productCode);
 	}
 
 }

@@ -2,37 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
 
- <resultMap id="userInfo" type="user">
-		<result column="user_code" property="userCode" 
-			jdbcType="INTEGER" javaType="int" />
-		<result column="user_id" property="userId" 
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="user_pass" property="userPass"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_name" property="userMame"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_nickname" property="userNickname"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_email" property="userEmail"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_tel" property="userTel"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_address" property="userAddress"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_gender" property="userGender"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_profile" property="userProfile"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_birth" property="userBirth"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_status" property="userStatus"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_point" property="userPoint"
-			jdbcType="DOUBLE" javaType="double" />
-		<result column="user_role" property="userRole"
-			jdbcType="VARCHAR" javaType="String" />
+	<resultMap id="userInfo" type="user">
 	</resultMap>
-	
+
+
 	<select id="read" resultMap="userInfo">
 		select * from user where
 		user_id=#{userId}
@@ -47,13 +20,13 @@
 	<select id="readUemail" resultType="String">
 		select user_id from user
 		where
-		user_email=#{userEmail} and user_name=#{userMame}
+		user_email=#{userEmail} and user_name=#{userName}
 	</select>
 
 	<insert id="insert">
 		insert into
 		user(user_id,user_pass,user_name,user_nickname,user_email,user_tel,user_address,user_gender,user_profile,user_birth)
-		values(#{userId},#{userPass},#{userMame},#{userNickname},#{userEmail},#{userTel},#{userAddress},#{userGender},#{userProfile},#{userBirth})
+		values(#{userId},#{userPass},#{userName},#{userNickname},#{userEmail},#{userTel},#{userAddress},#{userGender},#{userProfile},#{userBirth})
 	</insert>
 
 	<update id="update">
@@ -65,22 +38,27 @@
 
 	<update id="updatePw">
 		update user set user_pass = #{userPass} where
-		user_id =#{userId}
+		user_id
+		=#{userId}
 	</update>
 
 	<update id="deactivate">
-		update user set user_status='0' where user_id=#{userId}
+		update user set user_status='0' where
+		user_id=#{userId}
 	</update>
 
 	<update id="restore">
-		update user set user_status='1' where user_id=#{userId}
+		update user set user_status='1' where
+		user_id=#{userId}
 	</update>
 
 	<update id="updateUpoint">
-		update user set user_point=(select avg(review_point) from
+		update user set user_point=(select avg(review_point)
+		from
 		review where
 		review_receiver=#{reviewReceiver})
-		where user_nickname=#{reviewReceiver}
+		where
+		user_nickname=#{reviewReceiver}
 	</update>
 
 </mapper>

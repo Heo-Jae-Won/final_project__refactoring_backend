@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 public class ProductListResponse {
 	private List<ProductBoardDto> productList;
-	private int productListToal;
+	private int productListTotal;
 
 }

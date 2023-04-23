@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.EventDto;
@@ -23,8 +22,7 @@ public class EventController {
 	@Autowired
 	private final EventService eventService;
 	
-	@ResponseBody
-	@RequestMapping(value="/api/event/list",method=RequestMethod.GET)
+	@RequestMapping(value="/api/event",method=RequestMethod.GET)
 	public EventListResponse list(int page, int num, String searchType, String keyword) throws Exception {
 		EventListResponse eventReplyListResponse = new EventListResponse();
 		eventReplyListResponse.setEventList(eventService.getList(page, num, searchType, keyword));
@@ -33,25 +31,21 @@ public class EventController {
 		return eventReplyListResponse;
 	};
 
-	@ResponseBody
 	@RequestMapping(value="/api/event/{eventCode}",method=RequestMethod.GET)
 	public EventDto read(@PathVariable int eventCode) {
 		return eventService.read(eventCode);
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/api/event", method = RequestMethod.PATCH)
 	public void update(@RequestBody EventDto UpdateDtO) {
 		eventService.update(UpdateDtO);
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/api/event", method = RequestMethod.POST)
 	public void insert(EventDto InsertDto) {
 		eventService.insert(InsertDto);
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/api/event/{eventCode}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable int eventCode) {
 		eventService.eventDelete(eventCode);

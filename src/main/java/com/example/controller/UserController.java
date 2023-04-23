@@ -14,19 +14,21 @@ import com.example.dto.UserDto;
 import com.example.service.UserService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
+@Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
 	private final UserService userService;
 
-	@RequestMapping("/{uid}")
-	public UserDto read(@PathVariable String uid) {
-		
-		return userService.read(uid);
+	@RequestMapping("/{userId}")
+	public UserDto read(@PathVariable String userId) {
+
+		return userService.read(userId);
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST)
@@ -36,9 +38,9 @@ public class UserController {
 		return result;
 	}
 
-	@RequestMapping(value = "/data/{unickname}")
-	public int checkDuplicatedUnickname(@PathVariable String unickname) {
-		int result = userService.checkDuplicatedUncikname(unickname);
+	@RequestMapping(value = "/data/{userNickname}")
+	public int checkDuplicatedUnickname(@PathVariable String userNickname) {
+		int result = userService.checkDuplicatedUncikname(userNickname);
 
 		return result;
 	}
@@ -55,10 +57,9 @@ public class UserController {
 		return result;
 	}
 
-	@RequestMapping(value = "/id/{uemail}/{uname}")
-	public String search(@PathVariable String uemail, @PathVariable String uname) {
-		String search = userService.searchId(uemail, uname);
-
+	@RequestMapping(value = "/id/{userEmail}/{userName}")
+	public String findUserId(@PathVariable String userEmail, @PathVariable String userName) {
+		String search = userService.searchId(userEmail, userName);
 		return search;
 	}
 
@@ -68,10 +69,10 @@ public class UserController {
 		userService.update(multi, updateVO);
 	}
 
-	@RequestMapping(value = "/condition", method = RequestMethod.PUT)
-	public void deactivate(@RequestBody String uid) {
-		
-		userService.deactivate(uid);
+	@RequestMapping(value = "/status", method = RequestMethod.PUT)
+	public void deactivate(@RequestBody String userId) {
+
+		userService.deactivate(userId);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
@@ -86,9 +87,9 @@ public class UserController {
 		userService.updatePw(updatepwVO);
 	}
 
-	@RequestMapping("/authentification/{utel}")
-	public String sendAuthSMS(@PathVariable String utel) {
-		String authNum = userService.sendAuthSMS(utel);
+	@RequestMapping("/authentication/{userTel}")
+	public String sendAuthSMS(@PathVariable String userTel) {
+		String authNum = userService.sendAuthSMS(userTel);
 
 		return authNum;
 	}

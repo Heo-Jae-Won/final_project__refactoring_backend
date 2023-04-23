@@ -43,7 +43,7 @@ public class UserService {
 			return;
 		}
 
-		String path = "/upload/project/";
+		String path = "/upload/";
 		MultipartFile file = multi.getFile("file");
 
 		String contentType = file.getContentType();
@@ -55,7 +55,7 @@ public class UserService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		updateVO.setUserProfile("/upload/project/" + file.getOriginalFilename());
+		updateVO.setUserProfile(path + file.getOriginalFilename());
 
 		Matcher matcherTel = patternTel.matcher(updateVO.getUserTel());
 		if (matcherTel.matches() == false) {
@@ -76,7 +76,7 @@ public class UserService {
 			throw new Error("no Image file");
 		}
 
-		String path = "c:/upload/project/";
+		String path = "/upload/";
 		MultipartFile file = multi.getFile("file");
 
 		String contentType = file.getContentType();
@@ -88,7 +88,7 @@ public class UserService {
 		if (!newFile.exists()) {
 			file.transferTo(newFile);
 		}
-		insertVO.setUserProfile("/upload/project/" + file.getOriginalFilename());
+		insertVO.setUserProfile(path + file.getOriginalFilename());
 
 		Pattern patternPassword = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,10}$");
 		Matcher matcherPassword = patternPassword.matcher(insertVO.getUserPass());
