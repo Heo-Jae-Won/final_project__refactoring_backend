@@ -24,7 +24,7 @@ public class ReviewDao {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("start", (page - 1) * num);
 		map.put("num", num);
-		map.put("receiver", receiver);
+		map.put("reviewReceiver", receiver);
 		return session.selectList(namespace + ".list", map);
 	}
 

@@ -4,22 +4,8 @@
 
 
 
-	<resultMap id="payInfo" type="pay">
-		<result column="product_code" property="productCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="pay_code" property="payCode" jdbcType="INTEGER"
-			javaType="int" />
-		<result column="pay_price" property="payPrice"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="pay_seller" property="paySeller"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="payBuyer" property="payBuyer"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="pay_type" property="payType"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="pay_email" property="payEmail"
-			jdbcType="VARCHAR" javaType="String" />
-	</resultMap>
+	<resultMap id="payInfo" type="pay"/>
+
 
 
 	<insert id="insert">

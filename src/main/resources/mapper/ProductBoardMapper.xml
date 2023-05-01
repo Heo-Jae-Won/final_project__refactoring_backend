@@ -2,36 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.ProductBoardMapper">
 
-	<resultMap id="productBoardInfo" type="productBoard">
-		<result column="product_code" property="productCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="product_title" property="productTitle"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="product_content" property="productContent"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="product_writer" property="productWriter"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="product_image" property="productImage"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="product_price" property="productPrice"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="product_status" property="productStatus"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="product_regDate" property="productRegDate"
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="product_updateDate"
-			property="productUpdateDate" jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="product_viewcnt" property="productViewcnt"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="product_likecnt" property="productLikecnt"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="product_name" property="productName"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="user_point" property="userPoint"
-			jdbcType="DOUBLE" javaType="double" />
-		<result column="user_id" property="userId"
-			jdbcType="VARCHAR" javaType="String" />
-	</resultMap>
+	<resultMap id="productBoardInfo" type="productBoard"/>
 
 	<select id="list" resultMap="productBoardInfo">
 		select

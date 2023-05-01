@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class ReviewListResponse {
 	private List<ReviewDto> reviewList;
-	private int reveiwListTotal;
+	private int reviewListTotal;
 
 }

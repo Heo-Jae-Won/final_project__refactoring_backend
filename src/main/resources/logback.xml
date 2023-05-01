@@ -112,7 +112,7 @@
 	</logger> 
 	
 
-	<root level="debug">
+	<root level="info">
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="Error" />

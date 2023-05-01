@@ -2,7 +2,6 @@ package com.example.controller;
 
 import java.util.UUID;
 
-
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +29,7 @@ public class ReviewController {
 	@RequestMapping("")
 	public ReviewListResponse list(@Param("page") int page, @Param("num") int num, @Param("receiver") String receiver) {
 		ReviewListResponse reviewListResponse = new ReviewListResponse();
-		reviewListResponse.setReveiwListTotal(reviewService.getTotal(receiver));
+		reviewListResponse.setReviewListTotal(reviewService.getTotal(receiver));
 		reviewListResponse.setReviewList(reviewService.getLlist(page, num, receiver));
 
 		return reviewListResponse;

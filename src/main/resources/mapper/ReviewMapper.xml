@@ -3,22 +3,7 @@
 <mapper namespace="com.example.mapper.ReviewMapper">
 
 
-	<resultMap id="reviewInfo" type="review">
-		<result column="review_regDate" property="reviewRegDate"
-			jdbcType="DATE" javaType="java.sql.Date" />
-		<result column="review_code" property="reviewCode"
-			jdbcType="CHAR" javaType="String" />
-		<result column="review_content" property="reviewContent"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="review_sender" property="reviewSender"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="review_receiver" property="reviewReceiver"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="review_point" property="reviewPoint"
-			jdbcType="DOUBLE" javaType="double" />
-		<result column="pay_code" property="payCode" jdbcType="CHAR"
-			javaType="String" />
-	</resultMap>
+	<resultMap id="reviewInfo" type="review"/>
 
 
 		<select id="list" resultMap="reviewInfo">

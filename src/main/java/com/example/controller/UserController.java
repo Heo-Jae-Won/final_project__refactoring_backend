@@ -27,7 +27,6 @@ public class UserController {
 
 	@RequestMapping("/{userId}")
 	public UserDto read(@PathVariable String userId) {
-
 		return userService.read(userId);
 	}
 
@@ -41,7 +40,7 @@ public class UserController {
 	@RequestMapping(value = "/data/{userNickname}")
 	public int checkDuplicatedUnickname(@PathVariable String userNickname) {
 		int result = userService.checkDuplicatedUncikname(userNickname);
-
+	
 		return result;
 	}
 
@@ -52,8 +51,9 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public int login(@RequestBody UserDto loginVO) {
+		log.info("loginPassowrd: {}", loginVO.getUserPass());
 		int result = userService.userLoginStatus(loginVO);
-
+		log.info("result: {}",result);
 		return result;
 	}
 
@@ -83,7 +83,7 @@ public class UserController {
 
 	@RequestMapping(value = "/password", method = RequestMethod.PATCH)
 	public void updatePw(@RequestBody UserDto updatepwVO) throws Exception {
-
+		log.info("updaetPw: {}", updatepwVO.getUserId());
 		userService.updatePw(updatepwVO);
 	}
 

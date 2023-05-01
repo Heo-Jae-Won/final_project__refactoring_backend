@@ -9,14 +9,17 @@ import com.example.dao.TransactionDao;
 import com.example.dto.PayDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class TransactionService {
-	private TransactionDao transactionDao;
+	private final TransactionDao transactionDao; //final이 없으면 null 뜸.
 
 	public List<PayDto> getBuyList(String buyer, int page) {
+		log.info("buyer: {}",buyer);
 		List<PayDto> buyList = transactionDao.getBuyList(buyer, page);
 
 		return buyList;

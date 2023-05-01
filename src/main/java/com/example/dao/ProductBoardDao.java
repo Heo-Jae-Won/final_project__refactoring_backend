@@ -28,12 +28,12 @@ public class ProductBoardDao {
 		session.update(namespace + ".update", vo);
 	};
 
-	public ProductBoardDto read(String pcode) {
-		return session.selectOne(namespace + ".read", pcode);
+	public ProductBoardDto read(String productCode) {
+		return session.selectOne(namespace + ".read", productCode);
 	};
 
-	public void updateViewcnt(String pcode) {
-		session.update(namespace + ".updateViewcnt", pcode);
+	public void updateViewcnt(String productCode) {
+		session.update(namespace + ".updateViewcnt", productCode);
 	};
 
 	public int getTotal(String searchType, String keyword) {

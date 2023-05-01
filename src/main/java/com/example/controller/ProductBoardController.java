@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -19,9 +18,11 @@ import com.example.response.ProductListResponse;
 import com.example.service.ProductBoardService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductBoardController {
 
@@ -54,13 +55,13 @@ public class ProductBoardController {
 
 	@RequestMapping("/api/productBoard/{productCode}")
 	public ProductBoardDto readviewcnt(@PathVariable String productCode) throws Exception {
-
+		log.info("productCode: {}", productCode);
 		return pboardService.read(productCode);
 	};
 
 	@RequestMapping("/api/productBoard/data/{productCode}")
 	public ProductBoardDto read(@PathVariable String productCode) throws Exception {
-		
+
 		return pboardService.getProductInfo(productCode);
 	};
 
@@ -72,13 +73,13 @@ public class ProductBoardController {
 
 	@RequestMapping("/api/productBoard/best")
 	public List<ProductBoardDto> getBestItems() {
-		
+
 		return pboardService.getBestItems();
 	}
 
 	@RequestMapping(value = "/api/productBoard/{productCode}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable String productCode) {
-		
+
 		pboardService.delete(productCode);
 	}
 

@@ -3,16 +3,7 @@
 <mapper namespace="com.example.mapper.ProductBoardLikeMapper">
 
 
-	<resultMap id="productBoardLikeInfo" type="productBoardLike">
-		<result column="user_nickname" property="userNickname"
-			jdbcType="VARCHAR" javaType="String" />
-		<result column="product_code" property="productCode"
-			jdbcType="INTEGER" javaType="int" />
-		<result column="like_code" property="likeCode"
-			jdbcType="CHAR" javaType="String" />
-		<result column="like_status" property="likeStatus"
-			jdbcType="TINYINT" javaType="short" />
-	</resultMap>
+	<resultMap id="productBoardLikeInfo" type="productBoardLike"/>
 
 
 	<update id="like">
