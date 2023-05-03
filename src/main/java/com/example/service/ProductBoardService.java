@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dao.ProductBoardDao;
 import com.example.dto.ProductBoardDto;
+import com.example.exception.ErrorEnum;
+import com.example.exception.ServiceException;
 
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -22,19 +24,18 @@ public class ProductBoardService {
 
 	private final ProductBoardDao productBoardDao;
 
-	//transaction이 안되는데 이유를 알아봐야 할 듯?
 	public ProductBoardDto read(String productCode) throws Exception {
 		productBoardDao.updateViewcnt(productCode);
-		
+
 		if (productBoardDao.read(productCode) == null) {
-			throw new Exception("불법침입자");
+			throw new ServiceException(ErrorEnum.NO_PRODUCT);
 		}
 
 		return productBoardDao.read(productCode);
 	}
-	
+
 	public ProductBoardDto getProductInfo(String productCode) throws Exception {
-		
+
 		if (productBoardDao.read(productCode) == null) {
 			throw new Exception("불법침입자");
 		}
@@ -42,54 +43,52 @@ public class ProductBoardService {
 		return productBoardDao.read(productCode);
 	}
 
-	public void insert(ProductBoardDto insertDto,MultipartHttpServletRequest multi) throws Exception {
-		if (multi.getFile("file") == null) {
-			throw new Exception("no Image file");
+	public void insert(ProductBoardDto insertDto, MultipartFile multi) throws Exception {
+		if (multi == null) {
+			throw new ServiceException(ErrorEnum.NO_CONTENT);
 		}
 
 		String path = "/upload/";
-		MultipartFile file = multi.getFile("file");
 
-		String contentType = file.getContentType();
+		String contentType = multi.getContentType();
 		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Exception("imagefile only accepted for jpeg,png");
+			throw new ServiceException(ErrorEnum.NOT_ACCEPTED_TYPE_IMAGE);
 		}
 
-		File newFile = new File(path + file.getOriginalFilename());
+		File newFile = new File(path + multi.getOriginalFilename());
 
 		if (!newFile.exists()) {
-			file.transferTo(newFile);
+			multi.transferTo(newFile);
 		}
-		insertDto.setProductImage(path + file.getOriginalFilename());
+		insertDto.setProductImage(path + multi.getOriginalFilename());
 		productBoardDao.insert(insertDto);
 	};
 
-	public void update(ProductBoardDto updateVO, MultipartHttpServletRequest multi) throws Exception {
-		
+	public void update(ProductBoardDto updateVO, MultipartFile multi) throws Exception {
+
 		// file path designate
-		if (multi.getFile("file") == null) {
+		if (multi == null) {
 			productBoardDao.update(updateVO);
 			return;
 		}
 
 		String path = "/upload/";
-		MultipartFile file = multi.getFile("file");
 
-		String contentType = file.getContentType();
+		String contentType = multi.getContentType();
 		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Exception("imagefile only accepted for jpeg,png");
+			throw new ServiceException(ErrorEnum.NOT_ACCEPTED_TYPE_IMAGE);
 		}
 
-		// file -> thumnail
-		File newFile = new File(path + file.getOriginalFilename());
+		// multi -> thumnail
+		File newFile = new File(path + multi.getOriginalFilename());
 		if (!newFile.exists()) {
 			FileOutputStream thumnail = new FileOutputStream(newFile);
-			Thumbnailator.createThumbnail(file.getInputStream(), thumnail, 300, 300);
+			Thumbnailator.createThumbnail(multi.getInputStream(), thumnail, 300, 300);
 			thumnail.close();
 		}
 
 		// update DB
-		updateVO.setProductImage(path + file.getOriginalFilename());
+		updateVO.setProductImage(path + multi.getOriginalFilename());
 		productBoardDao.update(updateVO);
 	};
 

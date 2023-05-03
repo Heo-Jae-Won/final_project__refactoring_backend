@@ -2,22 +2,19 @@ package com.example.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-
+import com.exapmle.validation.ValidProductBoardDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
 @Data
+
 public class ProductBoardDto {
 	private int productCode;
-	@NotBlank
 	private String productContent;
-	@NotBlank
+	@ValidProductBoardDto
 	private String productTitle;
-	@NotBlank
 	private String productWriter;
-	@NotBlank
 	private String productName;
 	private String productImage;
 	private int productPrice;
@@ -31,7 +28,5 @@ public class ProductBoardDto {
 	private Date productUpdateDate;
 	private double userPoint;
 	private String userId;
-
-	
 
 }

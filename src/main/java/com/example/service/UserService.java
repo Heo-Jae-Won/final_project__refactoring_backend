@@ -1,7 +1,5 @@
 package com.example.service;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +30,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.dao.UserDao;
 import com.example.dto.UserDto;
+import com.example.exception.ErrorEnum;
+import com.example.exception.ServiceException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,11 +46,9 @@ public class UserService {
 
 	private final UserDao userDao;
 	private final PasswordEncoder passwordEncoder;
-	Pattern patternTel = Pattern.compile("\\d{3}-\\d{3,4}-\\d{4}");
 
 	public UserDto read(String userId) {
 		UserDto userDto = userDao.read(userId);
-		log.info("userId: {}", userId);
 		return userDto;
 	}
 
@@ -65,7 +63,7 @@ public class UserService {
 
 		String contentType = file.getContentType();
 		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Exception("imagefile only accepted for jpeg,png");
+			throw new ServiceException(ErrorEnum.NOT_ACCEPTED_TYPE_IMAGE);
 		}
 
 		File newFile = new File(path + file.getOriginalFilename());
@@ -74,17 +72,6 @@ public class UserService {
 		}
 		updateVO.setUserProfile(path + file.getOriginalFilename());
 
-		Matcher matcherTel = patternTel.matcher(updateVO.getUserTel());
-		if (matcherTel.matches() == false) {
-			throw new Exception("does not satisfy tel pattern condition");
-		}
-
-		Pattern patternEmail = Pattern
-				.compile("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
-		Matcher matcherEmail = patternEmail.matcher(updateVO.getUserEmail());
-		if (matcherEmail.matches() == false) {
-			throw new Exception("does not satisfy condition");
-		}
 		userDao.update(updateVO);
 	}
 
@@ -107,26 +94,7 @@ public class UserService {
 		}
 		insertVO.setUserProfile(path + file.getOriginalFilename());
 
-		Pattern patternPassword = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,10}$");
-		Matcher matcherPassword = patternPassword.matcher(insertVO.getUserPass());
-		if (matcherPassword.matches() == false) {
-			throw new Exception("does not satisfy password pattern");
-		}
-
 		insertVO.setUserPass(passwordEncoder.encode(insertVO.getUserPass()));
-
-		Matcher matcherTel = patternTel.matcher(insertVO.getUserTel());
-		if (matcherTel.matches() == false) {
-			throw new Exception("does not satisfy tel pattern");
-		}
-
-		Pattern patternEmail = Pattern
-				.compile("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
-		Matcher matcherEmail = patternEmail.matcher(insertVO.getUserEmail());
-		if (matcherEmail.matches() == false) {
-			throw new Exception("does not satisfy email pattern");
-		}
-
 		userDao.insert(insertVO);
 	}
 

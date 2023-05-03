@@ -23,7 +23,6 @@
 			or event_content
 			LIKE concat('%', #{keyword}, '%')
 		</if>
-		
 		limit #{start}, #{num}
 	</select>
 

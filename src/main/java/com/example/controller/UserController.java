@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,12 +46,12 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/restore", method = RequestMethod.POST)
-	public void restore(UserDto restoreVO) {
+	public void restore(@Valid UserDto restoreVO) {
 		userService.restore(restoreVO);
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public int login(@RequestBody UserDto loginVO) {
+	public int login(@RequestBody @Valid UserDto loginVO) {
 		log.info("loginPassowrd: {}", loginVO.getUserPass());
 		int result = userService.userLoginStatus(loginVO);
 		log.info("result: {}",result);
@@ -64,7 +65,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void update(MultipartHttpServletRequest multi, UserDto updateVO) throws Exception {
+	public void update(MultipartHttpServletRequest multi, @Valid UserDto updateVO) throws Exception {
 
 		userService.update(multi, updateVO);
 	}
@@ -76,13 +77,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public void insert(MultipartHttpServletRequest multi, UserDto insertVO) throws Exception {
+	public void insert(MultipartHttpServletRequest multi, @Valid UserDto insertVO) throws Exception {
 		userService.insert(multi, insertVO);
 
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.PATCH)
-	public void updatePw(@RequestBody UserDto updatepwVO) throws Exception {
+	public void updatePw(@RequestBody @Valid UserDto updatepwVO) throws Exception {
 		log.info("updaetPw: {}", updatepwVO.getUserId());
 		userService.updatePw(updatepwVO);
 	}
