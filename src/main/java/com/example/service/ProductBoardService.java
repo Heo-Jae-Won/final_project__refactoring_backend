@@ -44,7 +44,7 @@ public class ProductBoardService {
 	}
 
 	public void insert(ProductBoardDto insertDto, MultipartFile multi) throws Exception {
-		if (multi == null) {
+		if (multi.isEmpty()) {
 			throw new ServiceException(ErrorEnum.NO_CONTENT);
 		}
 
@@ -67,7 +67,7 @@ public class ProductBoardService {
 	public void update(ProductBoardDto updateVO, MultipartFile multi) throws Exception {
 
 		// file path designate
-		if (multi == null) {
+		if (multi.isEmpty()) {
 			productBoardDao.update(updateVO);
 			return;
 		}

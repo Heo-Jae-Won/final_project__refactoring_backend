@@ -284,7 +284,7 @@ public class UserService {
 		int result = 0;
 
 		// when result=1, no duplicate
-		if (CheckUnickname == null) {
+		if (CheckUnickname.isEmpty()) {
 			result = 1;
 		}
 		return result;
@@ -293,7 +293,7 @@ public class UserService {
 	public String searchId(String uemail, String uname) {
 		String search = userDao.readUemail(uemail, uname);
 
-		if (search == null) {
+		if (search.isEmpty()) {
 			return "";
 		}
 		return search;

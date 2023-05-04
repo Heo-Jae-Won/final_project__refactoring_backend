@@ -17,19 +17,10 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-<!-- 	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<beans:bean
-				class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
-				<beans:property name="supportedMediaTypes">
-					<beans:list>
-						<beans:value>image/jpeg</beans:value>
-						<beans:value>image/png</beans:value>
-					</beans:list>
-				</beans:property>
-			</beans:bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven> 필요 없었음..-->
+	<!-- <mvc:annotation-driven> <mvc:message-converters> <beans:bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"> 
+		<beans:property name="supportedMediaTypes"> <beans:list> <beans:value>image/jpeg</beans:value> 
+		<beans:value>image/png</beans:value> </beans:list> </beans:property> </beans:bean> 
+		</mvc:message-converters> </mvc:annotation-driven> 필요 없었음.. -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -37,8 +28,6 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 
-	<!-- 화면을 어떻게 연결할 것인지 선언하는 부분 1순위 -->
-	<!-- 화면을 어떻게 연결할 것인지 선언하는 부분 2순위 -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -51,5 +40,8 @@
 
 	<context:component-scan
 		base-package="com.example.controller" />
+
+	<context:component-scan
+		base-package="com.example.exception" />
 
 </beans:beans>
