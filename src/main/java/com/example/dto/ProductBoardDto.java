@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-
 public class ProductBoardDto {
 	private int productCode;
 	private String productContent;

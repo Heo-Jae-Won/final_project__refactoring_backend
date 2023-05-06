@@ -14,10 +14,9 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController {
 
-	@Autowired
 	private final TransactionService transactionService;
 
 	@RequestMapping("/api/tradeInfo/buyList/{buyer}")

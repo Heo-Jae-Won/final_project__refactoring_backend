@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EventController {
 
-	@Autowired
 	private final EventService eventService;
 	
 	@RequestMapping(value="/api/event",method=RequestMethod.GET)

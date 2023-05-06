@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.EventReplyDao;
 import com.example.dto.EventReplyDto;
+import com.example.mapper.EventReplyMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,54 +15,55 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EventReplyService {
 
-	private final EventReplyDao eventReplyDao;
+	private final EventReplyMapper eventReplyMapper;
 
 	public void userDelete(int ercode) {
-		eventReplyDao.delete(ercode);
-		eventReplyDao.updateUserCondition(ercode);
+		eventReplyMapper.delete(ercode);
+		eventReplyMapper.updateUserCondition(ercode);
 	}
 
 	public void adminDelete(int ercode) {
-		eventReplyDao.adminDelete(ercode);
-		eventReplyDao.updateAdminCondition(ercode);
+		eventReplyMapper.adminDelete(ercode);
+		eventReplyMapper.updateAdminCondition(ercode);
 	}
 
 	public List<EventReplyDto> list(int page, int num, int eventCode) {
-		List<EventReplyDto> eventReplyList = eventReplyDao.list(page, num, eventCode);
+		int start = (page - 1) * num;
+		List<EventReplyDto> eventReplyList = eventReplyMapper.list(start, num, eventCode);
 
 		return eventReplyList;
 	}
 
 	public void update(EventReplyDto eventReplyDto) {
-		eventReplyDao.update(eventReplyDto);
+		eventReplyMapper.update(eventReplyDto);
 
 	}
 
 	public void insert(EventReplyDto eventReplyDto) {
-		eventReplyDao.insert(eventReplyDto);
+		eventReplyMapper.insert(eventReplyDto);
 	}
 
 	public void delete(int eventReplyCode) {
-		eventReplyDao.delete(eventReplyCode);
+		eventReplyMapper.delete(eventReplyCode);
 	}
 
 	public int getTotal(int eventReplyCode) {
-		int eventReplyTotal = eventReplyDao.getTotal(eventReplyCode);
+		int eventReplyTotal = eventReplyMapper.getTotal(eventReplyCode);
 		return eventReplyTotal;
 
 	}
 
 	public void allDelete(int eventCode) {
-		eventReplyDao.allDelete(eventCode);
+		eventReplyMapper.allDelete(eventCode);
 
 	}
 
 	public void updateUserCondition(int eventReplyCode) {
-		eventReplyDao.updateUserCondition(eventReplyCode);
+		eventReplyMapper.updateUserCondition(eventReplyCode);
 	}
 
 	public void updateAdminCondition(int eventReplyCode) {
-		eventReplyDao.updateAdminCondition(eventReplyCode);
+		eventReplyMapper.updateAdminCondition(eventReplyCode);
 	}
 
 }

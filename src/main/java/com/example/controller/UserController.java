@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.dto.UserDto;
 import com.example.service.UserService;
@@ -41,7 +42,7 @@ public class UserController {
 	@RequestMapping(value = "/data/{userNickname}")
 	public int checkDuplicatedUnickname(@PathVariable String userNickname) {
 		int result = userService.checkDuplicatedUncikname(userNickname);
-	
+
 		return result;
 	}
 
@@ -52,9 +53,7 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public int login(@RequestBody @Valid UserDto loginVO) {
-		log.info("loginPassowrd: {}", loginVO.getUserPass());
 		int result = userService.userLoginStatus(loginVO);
-		log.info("result: {}",result);
 		return result;
 	}
 
@@ -65,7 +64,8 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public void update(MultipartHttpServletRequest multi, @Valid UserDto updateVO) throws Exception {
+	public void update(@RequestPart(value = "data") UserDto updateVO,
+			@RequestPart(value = "file", required = false) MultipartFile multi) throws Exception {
 
 		userService.update(multi, updateVO);
 	}
@@ -77,14 +77,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public void insert(MultipartHttpServletRequest multi, @Valid UserDto insertVO) throws Exception {
+	public void insert(@RequestPart(value = "data") UserDto insertVO, @RequestPart(value = "file") MultipartFile multi)
+			throws Exception {
 		userService.insert(multi, insertVO);
 
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.PATCH)
 	public void updatePw(@RequestBody @Valid UserDto updatepwVO) throws Exception {
-		log.info("updaetPw: {}", updatepwVO.getUserId());
 		userService.updatePw(updatepwVO);
 	}
 

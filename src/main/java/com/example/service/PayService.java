@@ -1,12 +1,11 @@
 package com.example.service;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.PayDao;
-import com.example.dao.ProductBoardDao;
 import com.example.dto.PayDto;
+import com.example.mapper.PayMapper;
+import com.example.mapper.ProductBoardMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,25 +14,25 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PayService {
 
-	private final PayDao payDao;
-	private final ProductBoardDao pboardDao;
+	private final PayMapper payMapper;
+	private final ProductBoardMapper productBoardMapper;
 
 	public void insert(PayDto insertVO) {
-		payDao.insert(insertVO);
-		pboardDao.updateSold(insertVO.getProductCode());
+		payMapper.insert(insertVO);
+		productBoardMapper.updateSold(insertVO.getProductCode());
 	}
 
 	public void updateSellerCondition(String paycode) {
-		payDao.updateSellerCondition(paycode);
+		payMapper.updateSellerCondition(paycode);
 
 	}
 
 	public void updateBuyerCondition(String paycode) {
-		payDao.updateBuyerCondition(paycode);
+		payMapper.updateBuyerCondition(paycode);
 	}
 
 	public PayDto read(String paycode) {
-		PayDto payDto = payDao.read(paycode);
+		PayDto payDto = payMapper.read(paycode);
 
 		return payDto;
 	}

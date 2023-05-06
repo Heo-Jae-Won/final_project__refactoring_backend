@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.activation.CommandMap;
 import javax.activation.MailcapCommandMap;
@@ -25,13 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.example.dao.UserDao;
 import com.example.dto.UserDto;
+import com.example.enumType.User;
 import com.example.exception.ErrorEnum;
 import com.example.exception.ServiceException;
+import com.example.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,85 +43,76 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @RequiredArgsConstructor
 public class UserService {
 
-	private final UserDao userDao;
+	private final UserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;
 
 	public UserDto read(String userId) {
-		UserDto userDto = userDao.read(userId);
+		UserDto userDto = userMapper.read(userId);
 		return userDto;
 	}
 
-	public void update(MultipartHttpServletRequest multi, UserDto updateVO) throws Exception {
-		if (multi.getFile("file") == null) {
-			userDao.update(updateVO);
+	public void update(MultipartFile multi, UserDto updateVO) throws Exception {
+		if (multi == null) {
+			userMapper.update(updateVO);
 			return;
 		}
 
 		String path = "/upload/";
-		MultipartFile file = multi.getFile("file");
 
-		String contentType = file.getContentType();
+		String contentType = multi.getContentType();
 		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
 			throw new ServiceException(ErrorEnum.NOT_ACCEPTED_TYPE_IMAGE);
 		}
 
-		File newFile = new File(path + file.getOriginalFilename());
+		File newFile = new File(path + multi.getOriginalFilename());
 		if (!newFile.exists()) {
-			file.transferTo(newFile);
+			multi.transferTo(newFile);
 		}
-		updateVO.setUserProfile(path + file.getOriginalFilename());
+		updateVO.setUserProfile(path + multi.getOriginalFilename());
 
-		userDao.update(updateVO);
+		userMapper.update(updateVO);
 	}
 
-	public void insert(MultipartHttpServletRequest multi, UserDto insertVO) throws Exception {
-		if (multi.getFile("file") == null) {
-			throw new Error("no Image file");
+	public void insert(MultipartFile multi, UserDto insertVO) throws Exception {
+		if (multi == null) {
+			throw new ServiceException(ErrorEnum.NO_CONTENT);
 		}
 
 		String path = "/upload/";
-		MultipartFile file = multi.getFile("file");
 
-		String contentType = file.getContentType();
+		String contentType = multi.getContentType();
 		if (!contentType.contains("image/png") && !contentType.contains("image/jpeg")) {
-			throw new Exception("imagefile only accepted for jpeg,png");
+			throw new ServiceException(ErrorEnum.NOT_ACCEPTED_TYPE_IMAGE);
 		}
 
-		File newFile = new File(path + file.getOriginalFilename());
+		File newFile = new File(path + multi.getOriginalFilename());
 		if (!newFile.exists()) {
-			file.transferTo(newFile);
+			multi.transferTo(newFile);
 		}
-		insertVO.setUserProfile(path + file.getOriginalFilename());
+		insertVO.setUserProfile(path + multi.getOriginalFilename());
 
 		insertVO.setUserPass(passwordEncoder.encode(insertVO.getUserPass()));
-		userDao.insert(insertVO);
+		userMapper.insert(insertVO);
 	}
 
 	public void deactivate(String userId) {
-		userDao.deactivate(userId);
+		userMapper.deactivate(userId);
 	}
 
 	public void restore(UserDto restoreVO) {
-		userDao.restore(restoreVO);
+		userMapper.restore(restoreVO);
 
 	}
 
 	public void updatePw(UserDto updatepwVO) throws Exception {
 
-		Pattern patternPassword = Pattern.compile("^(?=.*[a-zA-Z])(?=.*[0-9]).{8,10}$");
-		Matcher matcherPassword = patternPassword.matcher(updatepwVO.getUserPass());
-
-		if (matcherPassword.matches() == false) {
-			throw new Exception("does not satisfy password pattern");
-		}
-
 		updatepwVO.setUserPass(passwordEncoder.encode(updatepwVO.getUserPass()));
 
-		userDao.updatePw(updatepwVO);
+		userMapper.updatePw(updatepwVO);
 	}
 
 	public void updateUpoint(String receiver) {
-		userDao.updateUpoint(receiver);
+		userMapper.updateUpoint(receiver);
 
 	}
 
@@ -148,8 +138,8 @@ public class UserService {
 		try {
 			coolSMS.send(params);
 		} catch (CoolsmsException e) {
-			System.out.println("UserDAOImpl - authPhoneNumber/errormessgae : " + e.getMessage());
-			System.out.println("UserDAOImpl - authPhoneNumbe/errorcode : " + e.getCode());
+			System.out.println("userMapperImpl - authPhoneNumber/errormessgae : " + e.getMessage());
+			System.out.println("userMapperImpl - authPhoneNumbe/errorcode : " + e.getCode());
 		}
 
 		return authNum;
@@ -242,18 +232,16 @@ public class UserService {
 	// find password
 	public int findPw(HttpServletResponse response, UserDto vo) throws Exception {
 		response.setContentType("text/html;charset=utf-8");
-		UserDto userInfo = userDao.read(vo.getUserId());
-		int result = 0;
+		UserDto userInfo = userMapper.read(vo.getUserId());
+		int result;
 
 		// no registered id
-		if (userInfo == null)
-			result = 1;
+		if (userInfo == null || !vo.getUserEmail().equals(userInfo.getUserEmail()))
+			result = User.NOT_VALID.getStatus();
 
 		// no registered email
-		else if (!vo.getUserEmail().equals(userInfo.getUserEmail()))
-			result = 2;
-		else {
 
+		else {
 			// temporary password generated
 			String upass = "";
 			int leftLimit = 97; // letter 'a'
@@ -271,29 +259,29 @@ public class UserService {
 
 			// password update
 			vo.setUserPass(passwordEncoder.encode(upass));
-			userDao.updatePw(vo);
+			userMapper.updatePw(vo);
 
 			// send password to registered email
-			result = 3;
+			result = User.PERMITTED.getStatus();
 		}
 		return result;
 	}
 
 	public int checkDuplicatedUncikname(String unickname) {
-		String CheckUnickname = userDao.readUnickname(unickname);
+		String CheckUnickname = userMapper.readUnickname(unickname);
 		int result = 0;
 
 		// when result=1, no duplicate
-		if (CheckUnickname.isEmpty()) {
-			result = 1;
+		if (StringUtils.hasText(CheckUnickname)) {
+			result = User.NOT_DUPLICATED.getStatus();
 		}
 		return result;
 	}
 
 	public String searchId(String uemail, String uname) {
-		String search = userDao.readUemail(uemail, uname);
+		String search = userMapper.readUemail(uemail, uname);
 
-		if (search.isEmpty()) {
+		if (StringUtils.hasText(search)) {
 			return "";
 		}
 		return search;
@@ -303,14 +291,12 @@ public class UserService {
 		int result;
 		UserDto ReadVO = read(loginDto.getUserId());
 
-		if (ReadVO == null) {
-			result = 0;
+		if (ReadVO == null || !passwordEncoder.matches(loginDto.getUserPass(), ReadVO.getUserPass())) {
+			result = User.NOT_VALID.getStatus();
 		} else if (ReadVO.getUserStatus().equals("0")) {
-			result = 1;
-		} else if (passwordEncoder.matches(loginDto.getUserPass(), ReadVO.getUserPass())) {
-			result = 2;
+			result = User.DEACTIVATED.getStatus();
 		} else {
-			result = 3;
+			result = User.PERMITTED.getStatus();
 		}
 		return result;
 	}

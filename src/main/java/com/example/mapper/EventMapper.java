@@ -1,4 +1,4 @@
-package com.example.dao;
+package com.example.mapper;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import com.example.dto.EventDto;
 
 @Mapper
 public interface EventMapper {
-	List<EventDto> list(@Param("start") int page, @Param("num") int num, @Param("searchType") String searchType,
+	List<EventDto> list(@Param("start") int start, @Param("num") int num, @Param("searchType") String searchType,
 			@Param("keyword") String keyword);
 
 	int getTotal(@Param("searchType") String searchType, @Param("keyword") String keyword);

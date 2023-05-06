@@ -23,7 +23,6 @@ import com.siot.IamportRestClient.response.Payment;
 @CrossOrigin(origins ="http://localhost:3000")
 public class PayController {
 
-	@Autowired
 	private PayService payService;
 
 	public PayController(PayService payService) {

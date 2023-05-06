@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class UserDto {
+	
 	private int userCode;
 	@NotBlank @Max(15)
 	private String userId;

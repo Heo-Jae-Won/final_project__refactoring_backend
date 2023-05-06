@@ -3,9 +3,9 @@ package com.example.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.ProductBoardDao;
-import com.example.dao.ProductBoardLikeDao;
 import com.example.dto.ProductBoardLikeDto;
+import com.example.mapper.ProductBoardLikeMapper;
+import com.example.mapper.ProductBoardMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,22 +13,22 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class ProductBoardLikeService {
-	private final ProductBoardLikeDao pboardLikeDao;
-	private final ProductBoardDao pboardDao;
+	private final ProductBoardLikeMapper productBoardLikeMapper;
+	private final ProductBoardMapper productBoardMapper;
 
 	public void like(ProductBoardLikeDto pboardLikeDto) {
-		pboardLikeDao.like(pboardLikeDto);
-		pboardDao.updateLove();
+		productBoardLikeMapper.like(pboardLikeDto);
+		productBoardMapper.updateLove();
 	}
 
 	public void dislike(ProductBoardLikeDto pboardDislikeDto) {
-		pboardLikeDao.dislike(pboardDislikeDto);
-		pboardDao.updateLove();
+		productBoardLikeMapper.dislike(pboardDislikeDto);
+		productBoardMapper.updateLove();
 
 	}
 
 	public ProductBoardLikeDto likeCount(String pcode, String unickname) {
-		ProductBoardLikeDto pboardLikeDto = pboardLikeDao.likeCount(pcode, unickname);
+		ProductBoardLikeDto pboardLikeDto = productBoardLikeMapper.likeCount(pcode, unickname);
 
 		return pboardLikeDto;
 	}

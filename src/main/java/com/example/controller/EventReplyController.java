@@ -23,13 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/eventReply")
 public class EventReplyController {
 
-	@Autowired
 	private final EventReplyService eventReplyService;
 
 	@RequestMapping("")
 	public EventReplyListResponse list(@Param("page") int page, @Param("num") int num,
 			@Param("eventCode") int eventCode) throws Exception {
-		log.info("eventCode: {}", eventCode);
 		EventReplyListResponse eventReplyListResponse = new EventReplyListResponse();
 		eventReplyListResponse.setEventReplyList(eventReplyService.list(page, num, eventCode));
 		eventReplyListResponse.setEventReplyTotal(eventReplyService.getTotal(eventCode));

@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins ="http://localhost:3000")
 public class ProductBoardLikeController {
 
-	@Autowired
 	private final ProductBoardLikeService productBoardLikeService;
 
 	@RequestMapping(value = "/api/productBoard/user/like", method = RequestMethod.PATCH)

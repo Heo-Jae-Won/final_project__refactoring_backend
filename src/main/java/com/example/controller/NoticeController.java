@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins ="http://localhost:3000")
 public class NoticeController {
 
-	@Autowired
 	private final NoticeService noticeService;
 
 	@RequestMapping("/api/notice")

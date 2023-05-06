@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.dao.PayDao;
-import com.example.dao.ReviewDao;
-import com.example.dao.UserDao;
 import com.example.dto.ReviewDto;
+import com.example.mapper.PayMapper;
+import com.example.mapper.ReviewMapper;
+import com.example.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,36 +17,37 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
 
-	private final ReviewDao reviewDao;
-	private final UserDao userDao;
-	private final PayDao payDao;
+	private final ReviewMapper reviewMapper;
+	private final UserMapper userMapper;
+	private final PayMapper payMapper;
 
 	public void insertSellerReview(ReviewDto SellerVO) {
-		reviewDao.insert(SellerVO);
-		userDao.updateUpoint(SellerVO.getReviewReceiver());
-		payDao.updateSellerCondition(SellerVO.getPayCode());
+		reviewMapper.insert(SellerVO);
+		userMapper.updateUpoint(SellerVO.getReviewReceiver());
+		payMapper.updateSellerCondition(SellerVO.getPayCode());
 	}
 
 	public void insertBuyerReview(ReviewDto BuyerVO) {
-		reviewDao.insert(BuyerVO);
-		userDao.updateUpoint(BuyerVO.getReviewReceiver());
-		payDao.updateBuyerCondition(BuyerVO.getPayCode());
+		reviewMapper.insert(BuyerVO);
+		userMapper.updateUpoint(BuyerVO.getReviewReceiver());
+		payMapper.updateBuyerCondition(BuyerVO.getPayCode());
 	}
 
 	public List<ReviewDto> getLlist(int page, int num, String receiver) {
-		List<ReviewDto> reveiwList = reviewDao.getList(page, num, receiver);
+		int start = (page - 1) * num;
+		List<ReviewDto> reveiwList = reviewMapper.getList(start, num, receiver);
 
 		return reveiwList;
 
 	}
 
 	public void insert(ReviewDto insertVO) {
-		reviewDao.insert(insertVO);
+		reviewMapper.insert(insertVO);
 
 	}
 
 	public int getTotal(String receiver) {
-		int reviewListTotal = reviewDao.getTotal(receiver);
+		int reviewListTotal = reviewMapper.getTotal(receiver);
 
 		return reviewListTotal;
 	}

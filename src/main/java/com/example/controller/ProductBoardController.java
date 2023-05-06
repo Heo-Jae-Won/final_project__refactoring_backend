@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductBoardController {
 
-	@Autowired
 	private final ProductBoardService pboardService;
 
 	@RequestMapping("/api/productBoard")
