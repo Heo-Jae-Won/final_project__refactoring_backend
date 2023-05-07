@@ -20,7 +20,6 @@ import com.siot.IamportRestClient.response.Payment;
 
 @RestController
 @RequestMapping("/payment")
-@CrossOrigin(origins ="http://localhost:3000")
 public class PayController {
 
 	private PayService payService;

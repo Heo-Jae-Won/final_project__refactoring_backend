@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:3000")
 public class ProductBoardLikeController {
 
 	private final ProductBoardLikeService productBoardLikeService;

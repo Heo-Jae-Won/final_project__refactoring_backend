@@ -28,6 +28,11 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 
+	<mvc:cors>
+		<mvc:mapping path="/**"
+			allowed-origins="http://localhost:3000" />
+	</mvc:cors>
+	
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

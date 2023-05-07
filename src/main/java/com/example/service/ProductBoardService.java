@@ -36,7 +36,7 @@ public class ProductBoardService {
 	public ProductBoardDto getProductInfo(String productCode) throws Exception {
 
 		if (productBoardMapper.read(productCode) == null) {
-			throw new Exception("불법침입자");
+			throw new ServiceException(ErrorEnum.NO_PRODUCT);
 		}
 
 		return productBoardMapper.read(productCode);

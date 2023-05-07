@@ -15,7 +15,6 @@ import com.example.service.EventService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins ="http://localhost:3000")
 @RequiredArgsConstructor
 public class EventController {
 
