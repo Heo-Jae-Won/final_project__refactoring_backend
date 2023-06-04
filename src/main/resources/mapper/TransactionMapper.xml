@@ -6,28 +6,28 @@
 
 	
 	
-	<select id="buyList" resultMap="transactionInfo">
+	<select id="getBuyList" resultMap="transactionInfo">
 		select pay_price, pay_buyer,pay_seller,pay_code,product_code,pay_buyer_reviewed, pay_regDate from
 		pay where pay_buyer=#{payBuyer}
 		order by pay_regDate
 		limit #{start}, 6
 	</select>
-	<select id="sellList" resultMap="transactionInfo">
+	<select id="getSellList" resultMap="transactionInfo">
 		select pay_price, pay_buyer,pay_seller,pay_code,product_code, pay_regDate,pay_seller_reviewed from
 		pay where pay_seller=#{paySeller}
 		order by pay_regDate
 		limit #{start}, 6
 	</select>
 
-	<select id="buyTotal" resultType="int">
+	<select id="getBuyTotal" resultType="int">
 		select count(*) from pay where pay_buyer=#{payBuyer}
 	</select>
 
-	<select id="sellTotal" resultType="int">
+	<select id="getSellTotal" resultType="int">
 		select count(*) from pay where pay_seller=#{paySeller}
 	</select>
 
-	<select id="sellchart" resultMap="transactionInfo">
+	<select id="getSellchart" resultMap="transactionInfo">
 		select
 		month(tempMonth.temp_month) month,
 		 ifnull(sum(p.pay_price),0) payPrice
@@ -41,7 +41,7 @@
             	temp_month;
 	</select>
 	
-	<select id="buychart" resultMap="transactionInfo">
+	<select id="getBuychart" resultMap="transactionInfo">
 		select
 		month(tempMonth.temp_month) month,
 		 ifnull(sum(p.pay_price),0) payPrice

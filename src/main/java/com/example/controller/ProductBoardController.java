@@ -64,7 +64,6 @@ public class ProductBoardController {
 	@RequestMapping(value = "/api/productBoard", method = RequestMethod.POST)
 	public void insert(@Validated @RequestPart(value = "data") ProductBoardDto insertVO,
 			@RequestPart(value = "file") MultipartFile multi) throws Exception {
-		log.info("insertVO: {}", insertVO);
 		pboardService.insert(insertVO, multi);
 	};
 

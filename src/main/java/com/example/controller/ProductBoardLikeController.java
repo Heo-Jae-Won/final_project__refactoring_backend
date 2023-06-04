@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.UUID;
 
+import org.apache.maven.shared.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public class ProductBoardLikeController {
 	@RequestMapping(value = "/api/productBoard/user/like", method = RequestMethod.PATCH)
 	public void like(@RequestBody ProductBoardLikeDto pboardLikeDto) {
 
-		if (pboardLikeDto.getLikeCode() == null) {
+		if (StringUtils.isBlank(pboardLikeDto.getLikeCode())) {
 			UUID code = UUID.randomUUID();
 			pboardLikeDto.setLikeCode(code.toString());
 		}
@@ -33,7 +34,7 @@ public class ProductBoardLikeController {
 
 	@RequestMapping(value = "/api/productBoard/user/dislike", method = RequestMethod.PATCH)
 	public void dislike(@RequestBody ProductBoardLikeDto pboardDislikeDto) {
-		
+
 		productBoardLikeService.dislike(pboardDislikeDto);
 	}
 

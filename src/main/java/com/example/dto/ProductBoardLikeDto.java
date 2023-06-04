@@ -8,8 +8,5 @@ public class ProductBoardLikeDto {
 	private String productCode;
 	private String likeCode;
 	private short likeStatus;
-	
 
-	
-	
 }

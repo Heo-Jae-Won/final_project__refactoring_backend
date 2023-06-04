@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 
+import com.example.dto.PayChartDto;
 import com.example.dto.PayDto;
 
 @Mapper
@@ -18,8 +19,8 @@ public interface TransactionMapper {
 
 	public int getSellTotal(String seller);
 
-	public List<PayDto> getSellchart(String seller);
+	public List<PayChartDto> getSellchart(String seller);
 
-	public List<PayDto> getBuychart(String buyer);
+	public List<PayChartDto> getBuychart(String buyer);
 
 }

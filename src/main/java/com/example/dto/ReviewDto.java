@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 public class ReviewDto {
-	
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date reviewRegDate;
 	private String reviewCode;
 	private String reviewContent;
@@ -18,10 +18,5 @@ public class ReviewDto {
 	private double reviewPoint;
 	private String payCode;
 	private int productCode;
-	
-	
-	
-	
-	
-	
+
 }

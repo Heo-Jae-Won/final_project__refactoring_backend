@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.UUID;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,16 +39,16 @@ public class ReviewController {
 	public int insert(ReviewDto insertDto) {
 		int result = 0;
 
-		if (payService.read(insertDto.getPayCode()) == null) {
+		if (ObjectUtils.isEmpty(payService.read(insertDto.getPayCode()))) {
 			return result;
 		}
 
 		UUID code = UUID.randomUUID();
 		insertDto.setReviewCode(code.toString());
 
-		String pwriter = productBoardService.readPwriter(insertDto.getProductCode());
+		String productWriter = productBoardService.readPwriter(insertDto.getProductCode());
 
-		if (insertDto.getReviewSender().equals(pwriter)) {
+		if (insertDto.getReviewSender().equals(productWriter)) {
 			reviewService.insertSellerReview(insertDto);
 		} else {
 			reviewService.insertBuyerReview(insertDto);

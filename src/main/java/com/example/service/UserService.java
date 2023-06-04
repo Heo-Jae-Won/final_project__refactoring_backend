@@ -272,7 +272,7 @@ public class UserService {
 		int result = 0;
 
 		// when result=1, no duplicate
-		if (StringUtils.hasText(CheckUnickname)) {
+		if (!StringUtils.hasText(CheckUnickname)) {
 			result = User.NOT_DUPLICATED.getStatus();
 		}
 		return result;
@@ -281,7 +281,7 @@ public class UserService {
 	public String searchId(String uemail, String uname) {
 		String search = userMapper.readUemail(uemail, uname);
 
-		if (StringUtils.hasText(search)) {
+		if (!StringUtils.hasText(search)) {
 			return "";
 		}
 		return search;

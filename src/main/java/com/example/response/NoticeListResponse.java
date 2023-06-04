@@ -11,4 +11,6 @@ public class NoticeListResponse {
 	private List<NoticeDto> noticeList;
 	private int noticeListTotal;
 
+	
 }
+

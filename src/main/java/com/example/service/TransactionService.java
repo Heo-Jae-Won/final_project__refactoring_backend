@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.dto.PayChartDto;
 import com.example.dto.PayDto;
 import com.example.mapper.TransactionMapper;
 
@@ -31,8 +32,8 @@ public class TransactionService {
 		return buyListTotal;
 	}
 
-	public List<PayDto> getBuyChart(String buyer) {
-		List<PayDto> buyChart = transactionMapper.getBuychart(buyer);
+	public List<PayChartDto> getBuyChart(String buyer) {
+		List<PayChartDto> buyChart = transactionMapper.getBuychart(buyer);
 
 		return buyChart;
 	}
@@ -50,8 +51,8 @@ public class TransactionService {
 		return sellListTotal;
 	}
 
-	public List<PayDto> getSellChart(String seller) {
-		List<PayDto> sellChart = transactionMapper.getBuychart(seller);
+	public List<PayChartDto> getSellChart(String seller) {
+		List<PayChartDto> sellChart = transactionMapper.getBuychart(seller);
 
 		return sellChart;
 
