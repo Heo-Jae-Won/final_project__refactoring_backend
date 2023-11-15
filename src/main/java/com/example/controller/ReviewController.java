@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +35,7 @@ public class ReviewController {
 		return reviewListResponse;
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@PostMapping(value = "")
 	public int insert(ReviewDto insertDto) {
 		int result = 0;
 

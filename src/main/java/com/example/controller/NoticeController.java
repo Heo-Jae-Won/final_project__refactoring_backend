@@ -1,12 +1,11 @@
 package com.example.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.NoticeDto;
@@ -28,9 +27,9 @@ public class NoticeController {
 		noticeListResponse.setNoticeListTotal(noticeService.getTotal(searchType, keyword));
 
 		return noticeListResponse;
-	};
+	}
 	
-	@RequestMapping(value = "/api/notice", method = RequestMethod.POST)
+	@PostMapping(value = "/api/notice")
 	public void insert(@RequestBody NoticeDto insertDTO) {
 		noticeService.insert(insertDTO);
 	}
@@ -40,12 +39,12 @@ public class NoticeController {
 		return noticeService.read(noticeCode);
 	}
 	
-	@RequestMapping(value = "/api/notice/{noticeCode}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/api/notice/{noticeCode}")
 	public void delete(@PathVariable String noticeCode) {
 		noticeService.delete(noticeCode);
 	}
 	
-	@RequestMapping(value = "/api/notice", method = RequestMethod.PATCH)
+	@PatchMapping(value = "/api/notice")
 	public void update(@RequestBody NoticeDto updateDTO) {
 		noticeService.update(updateDTO);
 	}

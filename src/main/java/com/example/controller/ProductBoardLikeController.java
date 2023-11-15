@@ -3,12 +3,10 @@ package com.example.controller;
 import java.util.UUID;
 
 import org.apache.maven.shared.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.ProductBoardLikeDto;
@@ -22,7 +20,7 @@ public class ProductBoardLikeController {
 
 	private final ProductBoardLikeService productBoardLikeService;
 
-	@RequestMapping(value = "/api/productBoard/user/like", method = RequestMethod.PATCH)
+	@PatchMapping(value = "/api/productBoard/user/like")
 	public void like(@RequestBody ProductBoardLikeDto pboardLikeDto) {
 
 		if (StringUtils.isBlank(pboardLikeDto.getLikeCode())) {
@@ -32,7 +30,7 @@ public class ProductBoardLikeController {
 		productBoardLikeService.like(pboardLikeDto);
 	}
 
-	@RequestMapping(value = "/api/productBoard/user/dislike", method = RequestMethod.PATCH)
+	@PatchMapping(value = "/api/productBoard/user/dislike")
 	public void dislike(@RequestBody ProductBoardLikeDto pboardDislikeDto) {
 
 		productBoardLikeService.dislike(pboardDislikeDto);
@@ -40,9 +38,8 @@ public class ProductBoardLikeController {
 
 	@RequestMapping("/api/productBoard/like/{productCode}/{userNickname}")
 	public ProductBoardLikeDto likeCount(@PathVariable String productCode, @PathVariable String userNickname) {
-		ProductBoardLikeDto likeCount = productBoardLikeService.likeCount(productCode, userNickname);
 
-		return likeCount;
+		return productBoardLikeService.likeCount(productCode, userNickname);
 	}
 
 }

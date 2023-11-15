@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.PayDto;
@@ -35,15 +33,15 @@ public class PayController {
 				"cvQ9Bb92gsKkhmUVoAzKJWqZBIN5qL9IS0yNr9X8fQt46FQ7PmkNAddqRVDtqm5AHf2ezN8QtBgOjtU0");
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@PostMapping(value = "")
 	public void insert(PayDto insertVO) {
 		payService.insert(insertVO);
 	}
 
-	@RequestMapping(value = "/{imp_uid}", method = RequestMethod.POST)
-	public IamportResponse<Payment> paymentByImpUid(HttpSession session, @PathVariable String imp_uid)
+	@PostMapping(value = "/{imp_uid}")
+	public IamportResponse<Payment> paymentByImpUid(HttpSession session, @PathVariable String impUid)
 			throws IamportResponseException, IOException {
-		return api.paymentByImpUid(imp_uid);
+		return api.paymentByImpUid(impUid);
 	}
 
 }
