@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.dto.UserDto;
-import com.example.enumType.User;
+import com.example.enumtype.User;
 import com.example.exception.ErrorEnum;
 import com.example.exception.ServiceException;
 import com.example.mapper.UserMapper;
