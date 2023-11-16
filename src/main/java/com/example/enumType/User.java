@@ -1,4 +1,4 @@
-package com.example.enumType;
+package com.example.enumtype;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
